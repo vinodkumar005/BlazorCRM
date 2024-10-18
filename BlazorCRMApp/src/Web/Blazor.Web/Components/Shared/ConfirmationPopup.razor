@@ -1,0 +1,65 @@
+﻿@if (_showPopup)
+{
+    <!-- Modal -->
+    <div class="modal fade show" id="exampleModal" tabindex="-1" style="display:block; opacity: 1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">@Title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @Message
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @onclick="Hide">Cancel</button>
+                    <button type="button" class="btn btn-danger" @onclick="OnSubmitButtonClick">@SubmitButtonText</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+    private bool _showPopup = false;
+    public string? Title { get; set; }
+    public string? Message { get; set; }
+    public string? SubmitButtonText { get; set; }
+    private Action? _onSubmit;
+
+    public ConfirmationPopup Configure(string title, string message, string submitButtonText)
+    {
+        Title = title;
+        Message = message;
+        SubmitButtonText = submitButtonText;
+        return this;
+    }
+
+    public void Show()
+    {
+        _showPopup = true;
+        StateHasChanged();
+    }
+
+    public async void Hide()
+    {
+        _showPopup = false;
+        StateHasChanged();
+    }
+
+    public ConfirmationPopup OnSubmit(Action onSubmit)
+    {
+        _onSubmit = onSubmit;
+        return this;
+    }
+
+
+    private async void OnSubmitButtonClick(MouseEventArgs e)
+    {
+        Hide();
+
+            if (_onSubmit != null)
+                _onSubmit();
+     }
+}

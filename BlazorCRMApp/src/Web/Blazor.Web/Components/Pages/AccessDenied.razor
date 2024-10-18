@@ -1,0 +1,18 @@
+﻿@page "/access-denied"
+@rendermode InteractiveServer
+@layout EmptyLayout
+<h3>Access Denied</h3>
+
+<p>You do not have permission to view this page. Please contact your administrator if you believe this is an error.</p>
+
+<button @onclick="GoBack">Go Back</button>
+
+@code {
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    void GoBack()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+}

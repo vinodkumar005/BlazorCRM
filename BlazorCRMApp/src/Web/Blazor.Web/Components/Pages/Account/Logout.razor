@@ -1,0 +1,31 @@
+﻿@page "/logout"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authentication.Cookies
+
+<h3>Logout</h3>
+<p>You have been successfully logged out.</p>
+
+<button @onclick="GoToLogin">Go to Login Page</button>
+
+@code {
+
+    [CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        NavigationManager!.NavigateTo($"/identity/account/logout", true);
+        // if (HttpContext != null && HttpContext.User.Identity.IsAuthenticated)
+        // {
+        //     await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+        //     NavigationManager.NavigateTo("/logout", true);  // Force page reload after logout
+        // }
+    }
+
+    private void GoToLogin()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+}

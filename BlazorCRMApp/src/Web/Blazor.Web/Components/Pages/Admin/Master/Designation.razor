@@ -1,0 +1,57 @@
+﻿@page "/designations"
+@using Blazor.Web.Components.Shared
+@attribute [Authorize(Roles = "SuperAdmin")]
+
+
+
+<div class="table-responsive">
+    <h3>Designation List</h3>
+    <button @onclick="ShowCreateForm">Create New</button>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                    S.No.
+                </th>
+                <th>Name</th>
+                <th>Active</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (!process)
+            {
+                if (designations != null && designations.Count() > 0)
+                {
+                    int count = 1;
+                    foreach (var item in designations)
+                    {
+                        <tr>
+                            <td>@count</td>
+                            <td>@item.Name</td>
+                            <td>@item.IsActive</td>
+                            <td>
+                                <button @onclick="() => EditDesignation(item)">Edit</button>
+                                <button @onclick="() => DeleteDesignation(item.Id,false)">Delete</button>
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4" class="text-center"><span class="spinner-grow"></span> </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@if (showForm)
+{
+    <DesignationForm OnSave="OnFormSave" editDesignation="selectDesignation" />
+}
+
+                                <ConfirmationPopup @ref="confirmationPopup"/>

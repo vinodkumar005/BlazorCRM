@@ -1,0 +1,58 @@
+﻿@page "/dashboard"
+@using Blazor.Web.Components.Pages.Example
+
+<PageTitle>Home</PageTitle>
+
+
+<h1>UserName: @userName</h1>
+<h1>Email: @email</h1>
+<h1>Address: @address</h1>
+<h1>Company: @company</h1>
+
+
+@* <CascadingValue Value="theme">
+    <CascadingValue Value="currentUser">
+        <ParentComponent />
+    </CascadingValue>
+</CascadingValue> *@
+@code {
+
+    private string theme = "dark";
+
+    public User currentUser = new User
+        {
+            Name = "Vinod",
+            Role = "Developer"
+        };
+
+
+
+
+
+
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    private int currentCount = 0;
+    string userName = string.Empty;
+    string email = string.Empty;
+    string address = string.Empty;
+    string company = string.Empty;
+
+    protected override async void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var response = await authenticationStateTask;
+
+            if (response.User.Identity.IsAuthenticated)
+            {
+                userName = response.User.Identity.Name;
+                email = response.User.FindFirst("Email")?.Value;
+                address = response.User.FindFirst("Address")?.Value;
+                company = response.User.FindFirst("Company")?.Value;
+            }
+            StateHasChanged();
+        }
+    }
+}

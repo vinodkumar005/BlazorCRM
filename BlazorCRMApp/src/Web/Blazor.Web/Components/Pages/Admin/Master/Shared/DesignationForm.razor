@@ -1,0 +1,18 @@
+﻿
+
+<EditForm Model="designationModal" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <div>
+        <div>
+            <label>Name:</label>
+            <InputText @bind-Value="designationModal.Name" class="form-control" />
+            <ValidationMessage For="@(()=>designationModal.Name)" class="error-text" />
+        </div>
+        <div>
+            <label>Is Active:</label>
+            <InputCheckbox @bind-Value="designationModal.IsActive" />
+        </div>
+        <button>Save</button>
+        @* <button @onclick="Cancel">Cancel</button> *@
+    </div>
+</EditForm> 
