@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/BlazorCRMApp/src/Shared/Shared.Lib/obj/Debug/net8.0/Shared.Lib.AssemblyInfoInputs.cache
+/BlazorCRMApp/src/Shared/Shared.Lib/obj/Debug/net8.0/Shared.Lib.AssemblyInfo.cs
