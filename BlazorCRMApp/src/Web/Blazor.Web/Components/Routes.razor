@@ -11,3 +11,25 @@
         </NotFound>
     </Router>
 </CascadingAuthenticationState>
+
+@code {
+    private bool _hasNavigated;
+
+    [CascadingParameter]
+    public HttpContext HttpContext { get; set; }
+
+    [Inject]
+    private NavigationManager NavigationManager { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && !_hasNavigated)
+        {
+            if (NavigationManager.Uri.EndsWith("/"))
+            {
+                _hasNavigated = true; // Prevent recursive navigation
+                NavigationManager!.NavigateTo($"/identity/account/userlogin", true);
+            }
+        }
+    }
+}

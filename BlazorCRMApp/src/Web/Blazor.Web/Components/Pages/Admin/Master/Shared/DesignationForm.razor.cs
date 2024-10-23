@@ -11,6 +11,8 @@ namespace Blazor.Web.Components.Pages.Admin.Master.Shared
 
         [Parameter] public EventCallback OnSave { get; set; }
 
+        [Parameter] public EventCallback OnCancel { get; set; }
+
         [Parameter]
         public DesignationResponseDto? editDesignation { get; set; }
 
@@ -37,6 +39,18 @@ namespace Blazor.Web.Components.Pages.Admin.Master.Shared
                 {
                     await OnSave.InvokeAsync();
                 }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async void CancelForm()
+        {
+            try
+            {
+                await OnCancel.InvokeAsync();
             }
             catch (Exception)
             {

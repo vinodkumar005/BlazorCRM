@@ -17,5 +17,5 @@ public partial class LeadNote
 
     public virtual UserLogin AddedByNavigation { get; set; }
 
-    public virtual Lead Lead { get; set; }
+    public virtual Leads Lead { get; set; }
 }

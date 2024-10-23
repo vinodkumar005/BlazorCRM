@@ -10,7 +10,12 @@ namespace Shared.Lib.Dto
 
         [Required]
         [DisplayName("Designation Name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = null!;
+
+        [Required]
+        [DisplayName("Designation Colour")]
+        public string Colour { get; set; } = null!;
+
         [DisplayName("Active")]
         public bool IsActive { get; set; }
     }
@@ -22,6 +27,9 @@ namespace Shared.Lib.Dto
 
         [DisplayName("Designation Name")]
         public string Name { get; set; }
+
+        public string Colour { get; set; } = null!;
+
         [DisplayName("Active")]
         public bool IsActive { get; set; }
 

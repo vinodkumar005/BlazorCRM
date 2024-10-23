@@ -6,6 +6,7 @@ namespace Blazor.Web.Services
     {
         #region [User]
         Task<BaseApiResponseDto<bool>> Signup(UsersDto model);
+        Task<BaseApiResponseDto<LoginResponseDto>> Login(LoginDto model);
         #endregion
     }
     public class UserService: IUserService
@@ -20,7 +21,12 @@ namespace Blazor.Web.Services
 
         public async Task<BaseApiResponseDto<bool>> Signup(UsersDto model)
         {
-            return await httpService.PostAsync<bool>("Account/Signup", model);
+            return await httpService.PostAsync<bool>("Account/SignUp", model);
+        }
+
+        public async Task<BaseApiResponseDto<LoginResponseDto>> Login(LoginDto model)
+        {
+            return await httpService.PostAsync<LoginResponseDto>("Account/Login", model);
         }
     }
 }

@@ -1,14 +1,24 @@
 ﻿using Blazor.API.Data.Entities;
 using Blazor.API.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Blazor.API.Services
 {
     public interface IMasterService
     {
+        #region [Designation Master]
         List<DesignationMaster> GetDesignations();
         DesignationMaster? GetDesignationById(int id);
         void AddUpdate(DesignationMaster CategoryModal);
         bool DeleteDesignationById(int id);
+        #endregion
+
+        #region[Country State City]
+        List<CountryMaster> GetCountries();
+        List<StateMaster> GetStates(int countryId);
+        List<CityMaster> GetCities(int stateId);
+        List<UserTimeZones> GetTimeZones();
+        #endregion
     }
     public class MasterService : IMasterService
     {
@@ -18,6 +28,10 @@ namespace Blazor.API.Services
         {
             _DBContext = dbContext;
         }
+
+        #region [Designation Master]
+
+
 
         public List<DesignationMaster> GetDesignations()
         {
@@ -87,6 +101,57 @@ namespace Blazor.API.Services
                 throw;
             }
         }
+        #endregion
 
+        #region[Country State City]
+        public List<CountryMaster> GetCountries()
+        {
+            try
+            {
+                return _DBContext.CountryMaster.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<StateMaster> GetStates(int countryId)
+        {
+            try
+            {
+                return _DBContext.StateMaster.Where(m=>m.CountryId== countryId).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<CityMaster> GetCities(int stateId)
+        {
+            try
+            {
+                return _DBContext.CityMaster.Where(m=>m.StateId== stateId).ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public List<UserTimeZones> GetTimeZones()
+        {
+            try
+            {
+                return _DBContext.UserTimeZones.ToList();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        #endregion
     }
 }

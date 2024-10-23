@@ -22,8 +22,20 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/AdminAccountLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcQWRtaW5BY2NvdW50TGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/EmptyLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcRW1wdHlMYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/Footer.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcRm9vdGVyLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/Header.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcSGVhZGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/AccessDenied.razor]
@@ -38,8 +50,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XExvZ291dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Admin/Account/Signup.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxBY2NvdW50XFNpZ251cC5yYXpvcg==
+[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Account/Signup.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XFNpZ251cC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Admin/Master/Designation.razor]
@@ -58,12 +70,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/Card.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXENhcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/ChildComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXENoaWxkQ29tcG9uZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/EditContextDemo.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXEVkaXRDb250ZXh0RGVtby5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/GrandComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXEdyYW5kQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXEluZGV4LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/ParentComponent.razor]
@@ -94,6 +118,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcQ29uZmlybWF0aW9uUG9wdXAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Shared/DialogComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcRGlhbG9nQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
 [E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -112,4 +140,8 @@ build_metadata.AdditionalFiles.CssScope =
 
 [E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Areas/Identity/Pages/Account/logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxsb2dvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Areas/Identity/Pages/Account/UserLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxVc2VyTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

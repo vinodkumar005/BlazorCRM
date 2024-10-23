@@ -36,6 +36,7 @@ E:\Local\BlazorCRM\BlazorCRMApp\src\Shared\Shared.Lib\obj\Debug\net8.0\Shared.Li
 E:\Local\BlazorCRM\BlazorCRMApp\src\Shared\Shared.Lib\obj\Debug\net8.0\Shared.Lib.AssemblyInfoInputs.cache
 E:\Local\BlazorCRM\BlazorCRMApp\src\Shared\Shared.Lib\obj\Debug\net8.0\Shared.Lib.AssemblyInfo.cs
 E:\Local\BlazorCRM\BlazorCRMApp\src\Shared\Shared.Lib\obj\Debug\net8.0\Shared.Lib.csproj.CoreCompileInputs.cache
+E:\Local\BlazorCRM\BlazorCRMApp\src\Shared\Shared.Lib\obj\Debug\net8.0\Shared.Lib.sourcelink.json
 E:\Local\BlazorCRM\BlazorCRMApp\src\Shared\Shared.Lib\obj\Debug\net8.0\Shared.Lib.dll
 E:\Local\BlazorCRM\BlazorCRMApp\src\Shared\Shared.Lib\obj\Debug\net8.0\refint\Shared.Lib.dll
 E:\Local\BlazorCRM\BlazorCRMApp\src\Shared\Shared.Lib\obj\Debug\net8.0\Shared.Lib.pdb

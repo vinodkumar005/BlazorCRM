@@ -1,0 +1,27 @@
+﻿<div class="col-md-4">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">@Title</h3>
+        </div>
+        <div class="box-body">
+            @bodyContent
+            @ChildContent
+        </div>
+        <div class="box-body">
+            @footerContent
+        </div>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public string? Title { get; set; }
+
+    [Parameter]
+    public RenderFragment bodyContent { get; set; } = default!;
+
+    [Parameter]
+    public RenderFragment footerContent { get; set; } = default!;
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; } = default!;
+}

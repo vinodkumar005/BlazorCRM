@@ -18,6 +18,4 @@ public partial class LeadComment
     public Guid AddedBy { get; set; }
 
     public virtual UserLogin AddedByNavigation { get; set; }
-
-    public virtual Lead Lead { get; set; }
 }

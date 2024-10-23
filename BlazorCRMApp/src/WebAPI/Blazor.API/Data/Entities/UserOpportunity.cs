@@ -57,7 +57,7 @@ public partial class UserOpportunity
 
     public DateTime ModifiedDate { get; set; }
 
-    public virtual State State { get; set; }
+    public virtual StateMaster State { get; set; }
 
     public virtual Users User { get; set; }
 }

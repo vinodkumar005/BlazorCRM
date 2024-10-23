@@ -17,5 +17,5 @@ public partial class StatePlan
 
     public virtual Plan Plan { get; set; }
 
-    public virtual State State { get; set; }
+    public virtual StateMaster State { get; set; }
 }

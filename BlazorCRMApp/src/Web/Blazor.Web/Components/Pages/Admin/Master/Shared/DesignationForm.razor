@@ -1,18 +1,52 @@
-﻿
+﻿<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">@(designationModal.Id > 0 ? "Edit Designation" : "Add Designation")</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <EditForm Model="designationModal" OnValidSubmit="Save">
+                        <DataAnnotationsValidator />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="Name">Name</label>
+                                <InputText @bind-Value="designationModal.Name" class="form-control" placeholder="Name" />
+                                <ValidationMessage For="@(()=>designationModal.Name)" class="error-text" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Colour">Colour</label>
+                                <InputText type="color" @bind-Value="designationModal.Colour" class="form-control" placeholder="Colour" />
+                                <ValidationMessage For="@(()=>designationModal.Colour)" class="error-text" />
+                            </div>
+                            <div class="form-check">
+                                <InputCheckbox @bind-Value="designationModal.IsActive" class="form-check-input" id="IsActive" />
+                                <label class="form-check-label" for="IsActive">Is Active</label>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
 
-<EditForm Model="designationModal" OnValidSubmit="Save">
-    <DataAnnotationsValidator />
-    <div>
-        <div>
-            <label>Name:</label>
-            <InputText @bind-Value="designationModal.Name" class="form-control" />
-            <ValidationMessage For="@(()=>designationModal.Name)" class="error-text" />
+                        <div class="card-footer">
+                            <button type="button" class="btn btn-outline-secondary" @onclick="CancelForm">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </EditForm>
+                </div>
+                <!-- /.card -->
+            </div>
         </div>
-        <div>
-            <label>Is Active:</label>
-            <InputCheckbox @bind-Value="designationModal.IsActive" />
-        </div>
-        <button>Save</button>
-        @* <button @onclick="Cancel">Cancel</button> *@
     </div>
-</EditForm> 
+</section>
+
+
+
+
+
+
+
+
+

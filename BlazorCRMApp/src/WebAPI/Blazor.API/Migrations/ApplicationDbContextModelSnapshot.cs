@@ -22,6 +22,47 @@ namespace Blazor.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Blazor.API.Data.Entities.AdditionalFieldData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedOn")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("FieldName")
+                        .IsRequired()
+                        .HasMaxLength(350)
+                        .HasColumnType("nvarchar(350)");
+
+                    b.Property<int>("FieldType")
+                        .HasColumnType("int");
+
+                    b.Property<long>("FlagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("Required")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("('0')");
+
+                    b.Property<DateTime?>("UpdateOn")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id")
+                        .HasName("PK__Addition__3214EC075D6ACCE9");
+
+                    b.HasIndex("FlagId");
+
+                    b.ToTable("AdditionalFieldData");
+                });
+
             modelBuilder.Entity("Blazor.API.Data.Entities.AdminCalendar", b =>
                 {
                     b.Property<long>("Id")
@@ -669,8 +710,6 @@ namespace Blazor.API.Migrations
                     b.HasKey("Id")
                         .HasName("PK__Alternat__3214EC07419EB5D0");
 
-                    b.HasIndex("LeadId");
-
                     b.ToTable("AlternateContactDetail");
                 });
 
@@ -719,7 +758,57 @@ namespace Blazor.API.Migrations
                     b.ToTable("Carrier");
                 });
 
-            modelBuilder.Entity("Blazor.API.Data.Entities.Country", b =>
+            modelBuilder.Entity("Blazor.API.Data.Entities.CityMaster", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int")
+                        .HasColumnName("StateID");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StateId");
+
+                    b.ToTable("CityMaster");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.CountryMaster", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(5)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CountryMaster");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.CultureMaster", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -727,30 +816,56 @@ namespace Blazor.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CountryCode")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                    b.Property<int>("CurrencyCodeId")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("CreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
+                    b.Property<int>("DateFormat")
+                        .HasColumnType("int");
 
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
+                    b.Property<int>("Language")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime?>("ModifyDate")
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("Name")
+                    b.Property<int>("TimeFormat")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id")
+                        .HasName("PK__CultureM__3214EC0712CD20F2");
+
+                    b.HasIndex("CurrencyCodeId");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.ToTable("CultureMaster");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.CurrencyMaster", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CurrencyCode")
                         .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
-                    b.HasKey("Id");
+                    b.Property<string>("CurrencyDisplayName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.ToTable("Country");
+                    b.HasKey("Id")
+                        .HasName("PK__Currency__3214EC0770D9B049");
+
+                    b.ToTable("CurrencyMaster");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.DesignationMaster", b =>
@@ -760,6 +875,11 @@ namespace Blazor.API.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Colour")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime");
@@ -781,6 +901,33 @@ namespace Blazor.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DesignationMaster");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.DesignationPermission", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreationOn")
+                        .HasColumnType("datetime");
+
+                    b.Property<int?>("CreatorBy")
+                        .HasColumnType("int");
+
+                    b.Property<long>("DesignationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("DesignationPermissionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DesignationId");
+
+                    b.ToTable("DesignationPermission");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.EmailTemplate", b =>
@@ -892,163 +1039,77 @@ namespace Blazor.API.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("IsDynamic")
+                    b.Property<bool?>("IsAdditionalField")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsDatetime")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsHidden")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("((1))");
+
+                    b.Property<bool?>("IsOtpEmail")
+                        .HasColumnType("bit");
+
+                    b.Property<bool?>("IsOtpMobile")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsStatic")
                         .HasColumnType("bit");
 
                     b.Property<DateTime>("ModifiedDate")
                         .HasColumnType("datetime");
+
+                    b.Property<int?>("SequenceId")
+                        .HasColumnType("int");
+
+                    b.Property<bool?>("VisibleToAll")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
                     b.ToTable("FlagMaster");
                 });
 
-            modelBuilder.Entity("Blazor.API.Data.Entities.Lead", b =>
+            modelBuilder.Entity("Blazor.API.Data.Entities.LeadCategoryMaster", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("Address1")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
-
-                    b.Property<string>("Address2")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DriverLicenseNumber")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime?>("EffectiveDate")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.Property<byte?>("GenderType")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("Height")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<byte>("LeadType")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("MainContactName")
-                        .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)");
-
-                    b.Property<string>("MiddleName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("MobileNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MotherMaidenName")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.Property<string>("Notes")
+                    b.Property<string>("LeadCategory")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NumberOfEmployess")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Occupation")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime");
 
-                    b.Property<byte?>("OpportunityStatus")
-                        .HasColumnType("tinyint");
+                    b.HasKey("Id");
 
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
-
-                    b.Property<byte?>("Status")
-                        .HasColumnType("tinyint");
-
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Weight")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id")
-                        .HasName("PK__AgentLea__3214EC076536DA7E");
-
-                    b.HasIndex("StateId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Lead");
+                    b.ToTable("LeadCategoryMaster");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadComment", b =>
@@ -1080,8 +1141,6 @@ namespace Blazor.API.Migrations
 
                     b.HasIndex("AddedBy");
 
-                    b.HasIndex("LeadId");
-
                     b.ToTable("LeadComment");
                 });
 
@@ -1111,9 +1170,44 @@ namespace Blazor.API.Migrations
 
                     b.HasIndex("AddedBy");
 
-                    b.HasIndex("LeadId");
-
                     b.ToTable("LeadConversation");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.LeadEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime>("EventDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("LeadId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Note")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id")
+                        .HasName("PK__LeadEven__3214EC074AA76B8C");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LeadEvent");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadFile", b =>
@@ -1152,43 +1246,7 @@ namespace Blazor.API.Migrations
 
                     b.HasIndex("AddedBy");
 
-                    b.HasIndex("LeadId");
-
                     b.ToTable("LeadFile");
-                });
-
-            modelBuilder.Entity("Blazor.API.Data.Entities.LeadLog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<Guid>("AddedBy")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("LeadId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LogType")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id")
-                        .HasName("PK__LeadLog__3214EC07A093C61C");
-
-                    b.HasIndex("AddedBy");
-
-                    b.HasIndex("LeadId");
-
-                    b.ToTable("LeadLog");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadNote", b =>
@@ -1220,6 +1278,41 @@ namespace Blazor.API.Migrations
                     b.HasIndex("LeadId");
 
                     b.ToTable("LeadNote");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.LeadQualityMaster", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LeadQuality")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LeadQualityMaster");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadSourceMaster", b =>
@@ -1378,167 +1471,6 @@ namespace Blazor.API.Migrations
                     b.ToTable("LeadStoreLeadTypes");
                 });
 
-            modelBuilder.Entity("Blazor.API.Data.Entities.LeadStoreLeads", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address1")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
-
-                    b.Property<string>("Address2")
-                        .IsRequired()
-                        .HasMaxLength(1500)
-                        .HasColumnType("nvarchar(1500)");
-
-                    b.Property<int?>("Age")
-                        .HasColumnType("int");
-
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("DriverLicenseNumber")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.Property<byte?>("GenderType")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("Height")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<byte>("IsSold")
-                        .HasColumnType("tinyint")
-                        .HasColumnName("isSold");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<int?>("LeadAge")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("LeadType")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("LeadsCartId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<long?>("LogId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("MiddleName")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("MobileNumber")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("MotherMaidenName")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Occupation")
-                        .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
-
-                    b.Property<string>("OrderNumber")
-                        .IsRequired()
-                        .HasMaxLength(12)
-                        .HasColumnType("nchar(12)")
-                        .IsFixedLength();
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Source")
-                        .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("nvarchar(2000)");
-
-                    b.Property<int?>("StateId")
-                        .HasColumnType("int");
-
-                    b.Property<byte?>("Status")
-                        .HasColumnType("tinyint");
-
-                    b.Property<long?>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Weight")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("WorkPhone")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nchar(50)")
-                        .IsFixedLength();
-
-                    b.Property<string>("ZipCode")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.HasKey("Id")
-                        .HasName("PK__LeadStor__3214EC07BAAD59DD");
-
-                    b.HasIndex("LeadType");
-
-                    b.HasIndex("LogId");
-
-                    b.HasIndex("StateId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("LeadStoreLeads");
-                });
-
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadStoreLog", b =>
                 {
                     b.Property<long>("Id")
@@ -1606,6 +1538,229 @@ namespace Blazor.API.Migrations
                     b.ToTable("LeadStoreOrderDetails");
                 });
 
+            modelBuilder.Entity("Blazor.API.Data.Entities.Leads", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Crmtype")
+                        .HasColumnType("int")
+                        .HasColumnName("CRMType");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("EmailOtp")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("EmailOTP");
+
+                    b.Property<DateTime?>("EmailOtptime")
+                        .HasColumnType("datetime")
+                        .HasColumnName("EmailOTPTime");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)");
+
+                    b.Property<long>("FlagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<byte?>("GenderType")
+                        .HasColumnType("tinyint");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<byte>("IsSold")
+                        .HasColumnType("tinyint")
+                        .HasColumnName("isSold");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.Property<DateTime?>("LeadAssignedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<long?>("LeadCategoryId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("LeadParentId")
+                        .HasColumnType("int");
+
+                    b.Property<long?>("LeadQualityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("LeadSourceId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("LeadsCartId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<long?>("LogId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("MobileNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("MobileOtp")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("MobileOTP");
+
+                    b.Property<DateTime?>("MobileOtptime")
+                        .HasColumnType("datetime")
+                        .HasColumnName("MobileOTPTime");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderNumber")
+                        .IsRequired()
+                        .HasMaxLength(12)
+                        .HasColumnType("nchar(12)")
+                        .IsFixedLength();
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long?>("PriorityId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int?>("StateId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TempEmailOtp")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("TempEmailOTP");
+
+                    b.Property<string>("TempMobileOtp")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasColumnName("TempMobileOTP");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ZipCode")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id")
+                        .HasName("PK__LeadStor__3214EC07BAAD59DD");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("FlagId");
+
+                    b.HasIndex("LeadCategoryId");
+
+                    b.HasIndex("LeadQualityId");
+
+                    b.HasIndex("LeadSourceId");
+
+                    b.HasIndex("LogId");
+
+                    b.HasIndex("PriorityId");
+
+                    b.HasIndex("StateId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Leads");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.LeadsLog", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<long?>("FlagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("LeadId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("ModifiedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id")
+                        .HasName("PK__LeadStor__3214EC07893EBD7C");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("FlagId");
+
+                    b.HasIndex("LeadId");
+
+                    b.HasIndex("ModifiedBy");
+
+                    b.ToTable("LeadsLog");
+                });
+
             modelBuilder.Entity("Blazor.API.Data.Entities.Menu", b =>
                 {
                     b.Property<long>("Id")
@@ -1646,6 +1801,62 @@ namespace Blazor.API.Migrations
                     b.ToTable("Menu");
                 });
 
+            modelBuilder.Entity("Blazor.API.Data.Entities.MenuItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime?>("CreatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<bool?>("IsActvie")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("MenuIcon")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("MenuName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<double?>("MenuOrder")
+                        .HasColumnType("float");
+
+                    b.Property<string>("MenuUrl")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("SubMenuIcon")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<string>("SubMenuName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .IsUnicode(false)
+                        .HasColumnType("varchar(100)");
+
+                    b.HasKey("Id")
+                        .HasName("PK_MenuItems");
+
+                    b.ToTable("MenuItem");
+                });
+
             modelBuilder.Entity("Blazor.API.Data.Entities.Plan", b =>
                 {
                     b.Property<long>("Id")
@@ -1678,6 +1889,41 @@ namespace Blazor.API.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("Plan");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.PriorityMaster", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Color")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ModifiedDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PriorityMaster");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.Product", b =>
@@ -1744,43 +1990,29 @@ namespace Blazor.API.Migrations
                     b.ToTable("Role");
                 });
 
-            modelBuilder.Entity("Blazor.API.Data.Entities.State", b =>
+            modelBuilder.Entity("Blazor.API.Data.Entities.StateMaster", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("ID");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<int?>("CountryId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreateDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("datetime")
-                        .HasDefaultValueSql("(getdate())");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifyDate")
-                        .HasColumnType("datetime");
+                        .HasColumnType("int")
+                        .HasColumnName("CountryID");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("StateCode")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CountryId");
 
-                    b.ToTable("State");
+                    b.ToTable("StateMaster");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.StatePlan", b =>
@@ -1811,6 +2043,40 @@ namespace Blazor.API.Migrations
                     b.HasIndex("StateId");
 
                     b.ToTable("StatePlan");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.StatusUpdateMaster", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<long>("FlagId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("LeadId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("StatusUpdateRecords")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdateDate")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id")
+                        .HasName("PK__StatusUp__3214EC07AFE3B139");
+
+                    b.HasIndex("FlagId");
+
+                    b.HasIndex("LeadId");
+
+                    b.ToTable("StatusUpdateMaster");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.UserCalendar", b =>
@@ -1852,7 +2118,7 @@ namespace Blazor.API.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id")
-                        .HasName("PK__AgentCal__3214EC079BE6D23D");
+                        .HasName("PK__UserCal__3214EC079BE6D23D");
 
                     b.HasIndex("UserId");
 
@@ -1882,7 +2148,7 @@ namespace Blazor.API.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id")
-                        .HasName("PK__AgentCar__3214EC07A2C78AB2");
+                        .HasName("PK__UserCar__3214EC07A2C78AB2");
 
                     b.HasIndex("CarrierId");
 
@@ -1915,6 +2181,15 @@ namespace Blazor.API.Migrations
 
                     b.Property<bool>("IsVerified")
                         .HasColumnType("bit");
+
+                    b.Property<bool>("IsVerifiedEmail")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastLoginDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("LastPasswordChangeDate")
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("ModifyDate")
                         .HasColumnType("datetime");
@@ -2061,7 +2336,7 @@ namespace Blazor.API.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id")
-                        .HasName("PK__AgentOpp__3214EC07C44A62BC");
+                        .HasName("PK__UserOpp__3214EC07C44A62BC");
 
                     b.HasIndex("StateId");
 
@@ -2091,7 +2366,7 @@ namespace Blazor.API.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id")
-                        .HasName("PK__AgentPro__3214EC070E320F34");
+                        .HasName("PK__UserPro__3214EC070E320F34");
 
                     b.HasIndex("CarrierId");
 
@@ -2139,18 +2414,21 @@ namespace Blazor.API.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("BodyBackGroundColor")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("City")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<int?>("CityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Colour")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("CreateDate")
                         .HasColumnType("datetime");
@@ -2168,7 +2446,6 @@ namespace Blazor.API.Migrations
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("FacebookLink")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -2178,32 +2455,26 @@ namespace Blazor.API.Migrations
                         .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("FooterBackGroundColor")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FooterTextColorH")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FooterTitleColor")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("FooterTitleTextSize")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("GooglePlusLink")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("HeaderBackGroundColor")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -2222,12 +2493,10 @@ namespace Blazor.API.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("LinkedInLink")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Logo")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
@@ -2236,21 +2505,18 @@ namespace Blazor.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<DateTime>("ModifyDate")
+                    b.Property<DateTime?>("ModifyDate")
                         .HasColumnType("datetime");
 
                     b.Property<string>("NavigationBackGroundColor")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("NavigationtextColor")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("NavigationtextSize")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
@@ -2258,17 +2524,14 @@ namespace Blazor.API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("ProfilePic")
-                        .IsRequired()
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("ShortUrl")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)")
                         .HasColumnName("Short_Url");
@@ -2277,7 +2540,6 @@ namespace Blazor.API.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("SubNavigationBgcolor")
-                        .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
                         .HasColumnName("SubNavigationBGColor");
@@ -2286,7 +2548,6 @@ namespace Blazor.API.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("TwitterLink")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
@@ -2294,12 +2555,15 @@ namespace Blazor.API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ZipCode")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
                     b.HasKey("Id")
-                        .HasName("PK__Agent__3214EC079F6CC205");
+                        .HasName("PK__Users__3214EC079F6CC205");
+
+                    b.HasIndex("CityId");
+
+                    b.HasIndex("CountryId");
 
                     b.HasIndex("DesignationId");
 
@@ -2312,19 +2576,28 @@ namespace Blazor.API.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Blazor.API.Data.Entities.AdditionalFieldData", b =>
+                {
+                    b.HasOne("Blazor.API.Data.Entities.FlagMaster", "Flag")
+                        .WithMany("AdditionalFieldData")
+                        .HasForeignKey("FlagId")
+                        .IsRequired()
+                        .HasConstraintName("FK_FlagMaster");
+
+                    b.Navigation("Flag");
+                });
+
             modelBuilder.Entity("Blazor.API.Data.Entities.AdminCalendarUsers", b =>
                 {
                     b.HasOne("Blazor.API.Data.Entities.AdminCalendar", "AdminCalendar")
                         .WithMany("AdminCalendarUsers")
                         .HasForeignKey("AdminCalendarId")
-                        .IsRequired()
-                        .HasConstraintName("FK_AdminCalendarAgents_AdminCalendar_AdminCalendarId");
+                        .IsRequired();
 
                     b.HasOne("Blazor.API.Data.Entities.Users", "User")
                         .WithMany("AdminCalendarUsers")
                         .HasForeignKey("UserId")
-                        .IsRequired()
-                        .HasConstraintName("FK_AdminCalendarAgents_Agent_AgentId");
+                        .IsRequired();
 
                     b.Navigation("AdminCalendar");
 
@@ -2343,10 +2616,10 @@ namespace Blazor.API.Migrations
 
             modelBuilder.Entity("Blazor.API.Data.Entities.AdminLead", b =>
                 {
-                    b.HasOne("Blazor.API.Data.Entities.State", "State")
+                    b.HasOne("Blazor.API.Data.Entities.StateMaster", "State")
                         .WithMany("AdminLead")
                         .HasForeignKey("StateId")
-                        .HasConstraintName("FK_Adminlead_State");
+                        .HasConstraintName("FK_Adminlead_StateMaster");
 
                     b.Navigation("State");
                 });
@@ -2425,15 +2698,14 @@ namespace Blazor.API.Migrations
                     b.HasOne("Blazor.API.Data.Entities.Users", "User")
                         .WithMany("AdminNotes")
                         .HasForeignKey("UserId")
-                        .IsRequired()
-                        .HasConstraintName("FK_AdminNotes_Agent_AgentId");
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.Agency", b =>
                 {
-                    b.HasOne("Blazor.API.Data.Entities.State", "State")
+                    b.HasOne("Blazor.API.Data.Entities.StateMaster", "State")
                         .WithMany("Agency")
                         .HasForeignKey("StateId");
 
@@ -2447,7 +2719,7 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("AgencyId")
                         .IsRequired();
 
-                    b.HasOne("Blazor.API.Data.Entities.State", "State")
+                    b.HasOne("Blazor.API.Data.Entities.StateMaster", "State")
                         .WithMany("AgencyAppointment")
                         .HasForeignKey("StateId")
                         .IsRequired();
@@ -2464,7 +2736,7 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("AgencyId")
                         .IsRequired();
 
-                    b.HasOne("Blazor.API.Data.Entities.State", "State")
+                    b.HasOne("Blazor.API.Data.Entities.StateMaster", "State")
                         .WithMany("AgencyLicense")
                         .HasForeignKey("StateId")
                         .IsRequired();
@@ -2481,7 +2753,7 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("AgencyId")
                         .IsRequired();
 
-                    b.HasOne("Blazor.API.Data.Entities.State", "State")
+                    b.HasOne("Blazor.API.Data.Entities.StateMaster", "State")
                         .WithMany("AgencyState")
                         .HasForeignKey("StateId")
                         .IsRequired();
@@ -2491,32 +2763,44 @@ namespace Blazor.API.Migrations
                     b.Navigation("State");
                 });
 
-            modelBuilder.Entity("Blazor.API.Data.Entities.AlternateContactDetail", b =>
+            modelBuilder.Entity("Blazor.API.Data.Entities.CityMaster", b =>
                 {
-                    b.HasOne("Blazor.API.Data.Entities.Lead", "Lead")
-                        .WithMany("AlternateContactDetail")
-                        .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lead");
-                });
-
-            modelBuilder.Entity("Blazor.API.Data.Entities.Lead", b =>
-                {
-                    b.HasOne("Blazor.API.Data.Entities.State", "State")
-                        .WithMany("Lead")
+                    b.HasOne("Blazor.API.Data.Entities.StateMaster", "State")
+                        .WithMany("CityMaster")
                         .HasForeignKey("StateId")
-                        .HasConstraintName("FK_AgentLead_State_StateId");
-
-                    b.HasOne("Blazor.API.Data.Entities.Users", "User")
-                        .WithMany("Lead")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("FK_AgentLead_Agent_AgentId");
+                        .HasConstraintName("FK_CityMaster_StateMaster");
 
                     b.Navigation("State");
+                });
 
-                    b.Navigation("User");
+            modelBuilder.Entity("Blazor.API.Data.Entities.CultureMaster", b =>
+                {
+                    b.HasOne("Blazor.API.Data.Entities.CurrencyMaster", "CurrencyCode")
+                        .WithMany("CultureMaster")
+                        .HasForeignKey("CurrencyCodeId")
+                        .IsRequired()
+                        .HasConstraintName("FK__CultureMa__Curre__3F865F66");
+
+                    b.HasOne("Blazor.API.Data.Entities.UserLogin", "ModifiedByNavigation")
+                        .WithMany("CultureMaster")
+                        .HasForeignKey("ModifiedBy")
+                        .IsRequired()
+                        .HasConstraintName("FK__CultureMa__Modif__407A839F");
+
+                    b.Navigation("CurrencyCode");
+
+                    b.Navigation("ModifiedByNavigation");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.DesignationPermission", b =>
+                {
+                    b.HasOne("Blazor.API.Data.Entities.DesignationMaster", "Designation")
+                        .WithMany("DesignationPermission")
+                        .HasForeignKey("DesignationId")
+                        .IsRequired()
+                        .HasConstraintName("FK_DesignationPermission_DesignationPermission");
+
+                    b.Navigation("Designation");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadComment", b =>
@@ -2526,15 +2810,7 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("AddedBy")
                         .IsRequired();
 
-                    b.HasOne("Blazor.API.Data.Entities.Lead", "Lead")
-                        .WithMany("LeadComment")
-                        .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("AddedByNavigation");
-
-                    b.Navigation("Lead");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadConversation", b =>
@@ -2544,15 +2820,26 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("AddedBy")
                         .IsRequired();
 
-                    b.HasOne("Blazor.API.Data.Entities.Lead", "Lead")
-                        .WithMany("LeadConversation")
-                        .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("AddedByNavigation");
+                });
 
-                    b.Navigation("Lead");
+            modelBuilder.Entity("Blazor.API.Data.Entities.LeadEvent", b =>
+                {
+                    b.HasOne("Blazor.API.Data.Entities.UserLogin", "CreatedByNavigation")
+                        .WithMany("LeadEventCreatedByNavigation")
+                        .HasForeignKey("CreatedBy")
+                        .IsRequired()
+                        .HasConstraintName("FK__LeadEvent__Creat__100C566E");
+
+                    b.HasOne("Blazor.API.Data.Entities.UserLogin", "User")
+                        .WithMany("LeadEventUser")
+                        .HasForeignKey("UserId")
+                        .IsRequired()
+                        .HasConstraintName("FK__LeadEvent__UserI__0F183235");
+
+                    b.Navigation("CreatedByNavigation");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadFile", b =>
@@ -2562,33 +2849,7 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("AddedBy")
                         .IsRequired();
 
-                    b.HasOne("Blazor.API.Data.Entities.Lead", "Lead")
-                        .WithMany("LeadFile")
-                        .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("AddedByNavigation");
-
-                    b.Navigation("Lead");
-                });
-
-            modelBuilder.Entity("Blazor.API.Data.Entities.LeadLog", b =>
-                {
-                    b.HasOne("Blazor.API.Data.Entities.UserLogin", "AddedByNavigation")
-                        .WithMany("LeadLog")
-                        .HasForeignKey("AddedBy")
-                        .IsRequired();
-
-                    b.HasOne("Blazor.API.Data.Entities.Lead", "Lead")
-                        .WithMany("LeadLog")
-                        .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AddedByNavigation");
-
-                    b.Navigation("Lead");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadNote", b =>
@@ -2598,11 +2859,11 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("AddedBy")
                         .IsRequired();
 
-                    b.HasOne("Blazor.API.Data.Entities.Lead", "Lead")
+                    b.HasOne("Blazor.API.Data.Entities.Leads", "Lead")
                         .WithMany("LeadNote")
                         .HasForeignKey("LeadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_LeadNote_Leads");
 
                     b.Navigation("AddedByNavigation");
 
@@ -2616,34 +2877,6 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("LeadTypeId");
 
                     b.Navigation("LeadType");
-                });
-
-            modelBuilder.Entity("Blazor.API.Data.Entities.LeadStoreLeads", b =>
-                {
-                    b.HasOne("Blazor.API.Data.Entities.LeadStoreLeadTypes", "LeadTypeNavigation")
-                        .WithMany("LeadStoreLeads")
-                        .HasForeignKey("LeadType");
-
-                    b.HasOne("Blazor.API.Data.Entities.LeadStoreLog", "Log")
-                        .WithMany("LeadStoreLeads")
-                        .HasForeignKey("LogId");
-
-                    b.HasOne("Blazor.API.Data.Entities.State", "State")
-                        .WithMany("LeadStoreLeads")
-                        .HasForeignKey("StateId");
-
-                    b.HasOne("Blazor.API.Data.Entities.Users", "User")
-                        .WithMany("LeadStoreLeads")
-                        .HasForeignKey("UserId")
-                        .HasConstraintName("FK_LeadStoreLeads_Agent");
-
-                    b.Navigation("LeadTypeNavigation");
-
-                    b.Navigation("Log");
-
-                    b.Navigation("State");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadStoreLog", b =>
@@ -2663,6 +2896,115 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("CartId");
 
                     b.Navigation("Cart");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.Leads", b =>
+                {
+                    b.HasOne("Blazor.API.Data.Entities.CityMaster", "City")
+                        .WithMany("Leads")
+                        .HasForeignKey("CityId")
+                        .HasConstraintName("FK_Leads_CityMaster");
+
+                    b.HasOne("Blazor.API.Data.Entities.CountryMaster", "Country")
+                        .WithMany("Leads")
+                        .HasForeignKey("CountryId")
+                        .HasConstraintName("FK_Leads_CountryMaster");
+
+                    b.HasOne("Blazor.API.Data.Entities.FlagMaster", "Flag")
+                        .WithMany("Leads")
+                        .HasForeignKey("FlagId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Leads_FlagMaster");
+
+                    b.HasOne("Blazor.API.Data.Entities.LeadCategoryMaster", "LeadCategory")
+                        .WithMany("Leads")
+                        .HasForeignKey("LeadCategoryId")
+                        .HasConstraintName("FK__Leads__LeadCateg__51A50FA1");
+
+                    b.HasOne("Blazor.API.Data.Entities.LeadQualityMaster", "LeadQuality")
+                        .WithMany("Leads")
+                        .HasForeignKey("LeadQualityId")
+                        .HasConstraintName("FK__Leads__LeadQuali__529933DA");
+
+                    b.HasOne("Blazor.API.Data.Entities.LeadSourceMaster", "LeadSource")
+                        .WithMany("Leads")
+                        .HasForeignKey("LeadSourceId")
+                        .IsRequired()
+                        .HasConstraintName("FK_Leads_LeadSourceMaster");
+
+                    b.HasOne("Blazor.API.Data.Entities.LeadStoreLog", "Log")
+                        .WithMany("Leads")
+                        .HasForeignKey("LogId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("FK_Leads_LeadsLog_LogId");
+
+                    b.HasOne("Blazor.API.Data.Entities.PriorityMaster", "Priority")
+                        .WithMany("Leads")
+                        .HasForeignKey("PriorityId")
+                        .HasConstraintName("FK_Leads_PriorityMaster");
+
+                    b.HasOne("Blazor.API.Data.Entities.StateMaster", "State")
+                        .WithMany("Leads")
+                        .HasForeignKey("StateId");
+
+                    b.HasOne("Blazor.API.Data.Entities.UserLogin", "User")
+                        .WithMany("Leads")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_Leads_UserLogin");
+
+                    b.Navigation("City");
+
+                    b.Navigation("Country");
+
+                    b.Navigation("Flag");
+
+                    b.Navigation("LeadCategory");
+
+                    b.Navigation("LeadQuality");
+
+                    b.Navigation("LeadSource");
+
+                    b.Navigation("Log");
+
+                    b.Navigation("Priority");
+
+                    b.Navigation("State");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.LeadsLog", b =>
+                {
+                    b.HasOne("Blazor.API.Data.Entities.UserLogin", "CreatedByNavigation")
+                        .WithMany("LeadsLogCreatedByNavigation")
+                        .HasForeignKey("CreatedBy")
+                        .IsRequired()
+                        .HasConstraintName("FK_LeadsLog_UserLogin");
+
+                    b.HasOne("Blazor.API.Data.Entities.FlagMaster", "Flag")
+                        .WithMany("LeadsLog")
+                        .HasForeignKey("FlagId")
+                        .HasConstraintName("FK__LeadsLog__FlagId__416EA7D8");
+
+                    b.HasOne("Blazor.API.Data.Entities.Leads", "Lead")
+                        .WithMany("LeadsLog")
+                        .HasForeignKey("LeadId")
+                        .IsRequired()
+                        .HasConstraintName("FK_LeadsLog_Leads");
+
+                    b.HasOne("Blazor.API.Data.Entities.UserLogin", "ModifiedByNavigation")
+                        .WithMany("LeadsLogModifiedByNavigation")
+                        .HasForeignKey("ModifiedBy")
+                        .IsRequired()
+                        .HasConstraintName("FK_LeadsLog_UserLogin1");
+
+                    b.Navigation("CreatedByNavigation");
+
+                    b.Navigation("Flag");
+
+                    b.Navigation("Lead");
+
+                    b.Navigation("ModifiedByNavigation");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.Plan", b =>
@@ -2685,13 +3027,12 @@ namespace Blazor.API.Migrations
                     b.Navigation("Carrier");
                 });
 
-            modelBuilder.Entity("Blazor.API.Data.Entities.State", b =>
+            modelBuilder.Entity("Blazor.API.Data.Entities.StateMaster", b =>
                 {
-                    b.HasOne("Blazor.API.Data.Entities.Country", "Country")
-                        .WithMany("State")
+                    b.HasOne("Blazor.API.Data.Entities.CountryMaster", "Country")
+                        .WithMany("StateMaster")
                         .HasForeignKey("CountryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .HasConstraintName("FK_Country_State");
+                        .HasConstraintName("FK_StateMaster_CountryMaster");
 
                     b.Navigation("Country");
                 });
@@ -2703,7 +3044,7 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("PlanId")
                         .IsRequired();
 
-                    b.HasOne("Blazor.API.Data.Entities.State", "State")
+                    b.HasOne("Blazor.API.Data.Entities.StateMaster", "State")
                         .WithMany("StatePlan")
                         .HasForeignKey("StateId")
                         .IsRequired();
@@ -2713,13 +3054,31 @@ namespace Blazor.API.Migrations
                     b.Navigation("State");
                 });
 
+            modelBuilder.Entity("Blazor.API.Data.Entities.StatusUpdateMaster", b =>
+                {
+                    b.HasOne("Blazor.API.Data.Entities.FlagMaster", "Flag")
+                        .WithMany("StatusUpdateMaster")
+                        .HasForeignKey("FlagId")
+                        .IsRequired()
+                        .HasConstraintName("FK__StatusUpd__FlagI__679450C0");
+
+                    b.HasOne("Blazor.API.Data.Entities.Leads", "Lead")
+                        .WithMany("StatusUpdateMaster")
+                        .HasForeignKey("LeadId")
+                        .IsRequired()
+                        .HasConstraintName("FK__StatusUpd__LeadI__66A02C87");
+
+                    b.Navigation("Flag");
+
+                    b.Navigation("Lead");
+                });
+
             modelBuilder.Entity("Blazor.API.Data.Entities.UserCalendar", b =>
                 {
                     b.HasOne("Blazor.API.Data.Entities.Users", "User")
                         .WithMany("UserCalendar")
                         .HasForeignKey("UserId")
-                        .IsRequired()
-                        .HasConstraintName("FK_AgentCalendar_Agent_AgentId");
+                        .IsRequired();
 
                     b.Navigation("User");
                 });
@@ -2729,14 +3088,12 @@ namespace Blazor.API.Migrations
                     b.HasOne("Blazor.API.Data.Entities.Carrier", "Carrier")
                         .WithMany("UserCarrier")
                         .HasForeignKey("CarrierId")
-                        .IsRequired()
-                        .HasConstraintName("FK_AgentCarrier_Carrier_CarrierId");
+                        .IsRequired();
 
                     b.HasOne("Blazor.API.Data.Entities.Users", "User")
                         .WithMany("UserCarrier")
                         .HasForeignKey("UserId")
-                        .IsRequired()
-                        .HasConstraintName("FK_AgentCarrier_Agent_AgentId");
+                        .IsRequired();
 
                     b.Navigation("Carrier");
 
@@ -2756,16 +3113,14 @@ namespace Blazor.API.Migrations
 
             modelBuilder.Entity("Blazor.API.Data.Entities.UserOpportunity", b =>
                 {
-                    b.HasOne("Blazor.API.Data.Entities.State", "State")
+                    b.HasOne("Blazor.API.Data.Entities.StateMaster", "State")
                         .WithMany("UserOpportunity")
-                        .HasForeignKey("StateId")
-                        .HasConstraintName("FK_AgentOpportunity_State_StateId");
+                        .HasForeignKey("StateId");
 
                     b.HasOne("Blazor.API.Data.Entities.Users", "User")
                         .WithMany("UserOpportunity")
                         .HasForeignKey("UserId")
-                        .IsRequired()
-                        .HasConstraintName("FK_AgentOpportunity_Agent_AgentId");
+                        .IsRequired();
 
                     b.Navigation("State");
 
@@ -2777,20 +3132,18 @@ namespace Blazor.API.Migrations
                     b.HasOne("Blazor.API.Data.Entities.Carrier", "Carrier")
                         .WithMany("UserProduct")
                         .HasForeignKey("CarrierId")
-                        .IsRequired()
-                        .HasConstraintName("FK_AgentProduct_Carrier_CarrierId");
+                        .IsRequired();
 
                     b.HasOne("Blazor.API.Data.Entities.Product", "Product")
                         .WithMany("UserProduct")
                         .HasForeignKey("ProductId")
                         .IsRequired()
-                        .HasConstraintName("FK_AgentProduct_Product");
+                        .HasConstraintName("FK_UserProduct_Product");
 
                     b.HasOne("Blazor.API.Data.Entities.Users", "User")
                         .WithMany("UserProduct")
                         .HasForeignKey("UserId")
-                        .IsRequired()
-                        .HasConstraintName("FK_AgentProduct_Agent_AgentId");
+                        .IsRequired();
 
                     b.Navigation("Carrier");
 
@@ -2801,6 +3154,16 @@ namespace Blazor.API.Migrations
 
             modelBuilder.Entity("Blazor.API.Data.Entities.Users", b =>
                 {
+                    b.HasOne("Blazor.API.Data.Entities.CityMaster", "City")
+                        .WithMany("Users")
+                        .HasForeignKey("CityId")
+                        .HasConstraintName("FK_Users_CityMaster");
+
+                    b.HasOne("Blazor.API.Data.Entities.CountryMaster", "Country")
+                        .WithMany("Users")
+                        .HasForeignKey("CountryId")
+                        .HasConstraintName("FK_Users_Country");
+
                     b.HasOne("Blazor.API.Data.Entities.DesignationMaster", "Designation")
                         .WithMany("Users")
                         .HasForeignKey("DesignationId")
@@ -2811,16 +3174,18 @@ namespace Blazor.API.Migrations
                         .HasForeignKey("ParentId")
                         .HasConstraintName("FK_Users_UserLogin");
 
-                    b.HasOne("Blazor.API.Data.Entities.State", "State")
+                    b.HasOne("Blazor.API.Data.Entities.StateMaster", "State")
                         .WithMany("Users")
-                        .HasForeignKey("StateId")
-                        .HasConstraintName("FK_Agent_State_StateId");
+                        .HasForeignKey("StateId");
 
                     b.HasOne("Blazor.API.Data.Entities.UserLogin", "UserLogin")
-                        .WithMany("Users")
+                        .WithMany("UsersUserLogin")
                         .HasForeignKey("UserLoginId")
-                        .IsRequired()
-                        .HasConstraintName("FK_Agent_UserLogin_UserLoginId");
+                        .IsRequired();
+
+                    b.Navigation("City");
+
+                    b.Navigation("Country");
 
                     b.Navigation("Designation");
 
@@ -2865,29 +3230,58 @@ namespace Blazor.API.Migrations
                     b.Navigation("UserProduct");
                 });
 
-            modelBuilder.Entity("Blazor.API.Data.Entities.Country", b =>
+            modelBuilder.Entity("Blazor.API.Data.Entities.CityMaster", b =>
                 {
-                    b.Navigation("State");
+                    b.Navigation("Leads");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.CountryMaster", b =>
+                {
+                    b.Navigation("Leads");
+
+                    b.Navigation("StateMaster");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.CurrencyMaster", b =>
+                {
+                    b.Navigation("CultureMaster");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.DesignationMaster", b =>
                 {
+                    b.Navigation("DesignationPermission");
+
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("Blazor.API.Data.Entities.Lead", b =>
+            modelBuilder.Entity("Blazor.API.Data.Entities.FlagMaster", b =>
                 {
-                    b.Navigation("AlternateContactDetail");
+                    b.Navigation("AdditionalFieldData");
 
-                    b.Navigation("LeadComment");
+                    b.Navigation("Leads");
 
-                    b.Navigation("LeadConversation");
+                    b.Navigation("LeadsLog");
 
-                    b.Navigation("LeadFile");
+                    b.Navigation("StatusUpdateMaster");
+                });
 
-                    b.Navigation("LeadLog");
+            modelBuilder.Entity("Blazor.API.Data.Entities.LeadCategoryMaster", b =>
+                {
+                    b.Navigation("Leads");
+                });
 
-                    b.Navigation("LeadNote");
+            modelBuilder.Entity("Blazor.API.Data.Entities.LeadQualityMaster", b =>
+                {
+                    b.Navigation("Leads");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.LeadSourceMaster", b =>
+                {
+                    b.Navigation("Leads");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadStoreCart", b =>
@@ -2898,18 +3292,30 @@ namespace Blazor.API.Migrations
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadStoreLeadTypes", b =>
                 {
                     b.Navigation("LeadStoreFilter");
-
-                    b.Navigation("LeadStoreLeads");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.LeadStoreLog", b =>
                 {
-                    b.Navigation("LeadStoreLeads");
+                    b.Navigation("Leads");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.Leads", b =>
+                {
+                    b.Navigation("LeadNote");
+
+                    b.Navigation("LeadsLog");
+
+                    b.Navigation("StatusUpdateMaster");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.Plan", b =>
                 {
                     b.Navigation("StatePlan");
+                });
+
+            modelBuilder.Entity("Blazor.API.Data.Entities.PriorityMaster", b =>
+                {
+                    b.Navigation("Leads");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.Product", b =>
@@ -2924,7 +3330,7 @@ namespace Blazor.API.Migrations
                     b.Navigation("UserLogin");
                 });
 
-            modelBuilder.Entity("Blazor.API.Data.Entities.State", b =>
+            modelBuilder.Entity("Blazor.API.Data.Entities.StateMaster", b =>
                 {
                     b.Navigation("AdminLead");
 
@@ -2936,9 +3342,9 @@ namespace Blazor.API.Migrations
 
                     b.Navigation("AgencyState");
 
-                    b.Navigation("Lead");
+                    b.Navigation("CityMaster");
 
-                    b.Navigation("LeadStoreLeads");
+                    b.Navigation("Leads");
 
                     b.Navigation("StatePlan");
 
@@ -2959,21 +3365,31 @@ namespace Blazor.API.Migrations
 
                     b.Navigation("AdminLeadNote");
 
+                    b.Navigation("CultureMaster");
+
                     b.Navigation("LeadComment");
 
                     b.Navigation("LeadConversation");
 
-                    b.Navigation("LeadFile");
+                    b.Navigation("LeadEventCreatedByNavigation");
 
-                    b.Navigation("LeadLog");
+                    b.Navigation("LeadEventUser");
+
+                    b.Navigation("LeadFile");
 
                     b.Navigation("LeadNote");
 
                     b.Navigation("LeadStoreLog");
 
-                    b.Navigation("Users");
+                    b.Navigation("Leads");
+
+                    b.Navigation("LeadsLogCreatedByNavigation");
+
+                    b.Navigation("LeadsLogModifiedByNavigation");
 
                     b.Navigation("UsersParent");
+
+                    b.Navigation("UsersUserLogin");
                 });
 
             modelBuilder.Entity("Blazor.API.Data.Entities.Users", b =>
@@ -2981,10 +3397,6 @@ namespace Blazor.API.Migrations
                     b.Navigation("AdminCalendarUsers");
 
                     b.Navigation("AdminNotes");
-
-                    b.Navigation("Lead");
-
-                    b.Navigation("LeadStoreLeads");
 
                     b.Navigation("UserCalendar");
 

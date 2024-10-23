@@ -28,6 +28,11 @@ namespace Blazor.Web.Components.Pages.Admin.Master
             showForm = true;
         }
 
+        public void CancelForm()
+        {
+            showForm = false;
+        }
+
         public async Task OnFormSave()
         {
             showForm = false;
@@ -38,7 +43,7 @@ namespace Blazor.Web.Components.Pages.Admin.Master
         {
             if (!confirm)
             {
-                confirmationPopup.Configure("Delete Designation", "Are you sure you want to delete this designation", "Yes").OnSubmit(async () => await DeleteDesignation(id,true)).Show();
+                confirmationPopup.Configure("Delete Designation", "Are you sure you want to delete this designation", "Yes").OnSubmit(async () => await DeleteDesignation(id, true)).Show();
             }
             else
             {
