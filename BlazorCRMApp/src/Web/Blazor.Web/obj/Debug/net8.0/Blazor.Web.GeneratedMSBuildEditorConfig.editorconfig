@@ -9,139 +9,107 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Blazor.Web
 build_property.RootNamespace = Blazor.Web
-build_property.ProjectDir = E:\Local\BlazorCRM\BlazorCRMApp\src\Web\Blazor.Web\
+build_property.ProjectDir = D:\local1\Blazor\BlazorCRM\BlazorCRMApp\src\Web\Blazor.Web\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = E:\Local\BlazorCRM\BlazorCRMApp\src\Web\Blazor.Web
+build_property.MSBuildProjectDirectory = D:\local1\Blazor\BlazorCRM\BlazorCRMApp\src\Web\Blazor.Web
 build_property._RazorSourceGeneratorDebug = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/App.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/App.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/AdminAccountLayout.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcQWRtaW5BY2NvdW50TGF5b3V0LnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/EmptyLayout.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/EmptyLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcRW1wdHlMYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/Footer.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcRm9vdGVyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/Header.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcSGVhZGVyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/AccessDenied.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/AccessDenied.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2Nlc3NEZW5pZWQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Account/Login.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Account/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XExvZ2luLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Account/Logout.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Account/Logout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XExvZ291dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Account/Signup.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBY2NvdW50XFNpZ251cC5yYXpvcg==
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Admin/Account/Signup.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxBY2NvdW50XFNpZ251cC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Admin/Master/Designation.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Admin/Master/Designation.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxNYXN0ZXJcRGVzaWduYXRpb24ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Admin/Master/Shared/DesignationForm.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Admin/Master/Shared/DesignationForm.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xBZG1pblxNYXN0ZXJcU2hhcmVkXERlc2lnbmF0aW9uRm9ybS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Counter.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Error.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/Card.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXENhcmQucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/ChildComponent.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/ChildComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXENoaWxkQ29tcG9uZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/EditContextDemo.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXEVkaXRDb250ZXh0RGVtby5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/GrandComponent.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/GrandComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXEdyYW5kQ29tcG9uZW50LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/Index.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXEluZGV4LnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/ParentComponent.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Example/ParentComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFeGFtcGxlXFBhcmVudENvbXBvbmVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Home.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Index.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xJbmRleC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/NotFoundComponent.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/NotFoundComponent.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xOb3RGb3VuZENvbXBvbmVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Weather.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Pages/Weather.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Routes.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Shared/ConfirmationPopup.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Shared/ConfirmationPopup.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcQ29uZmlybWF0aW9uUG9wdXAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Shared/DialogComponent.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcRGlhbG9nQ29tcG9uZW50LnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/_Imports.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xfSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/MainLayout.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-nusu29qc37
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/NavMenu.razor]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-nj8hbcc90m
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Areas/Identity/Pages/Account/Authentication.cshtml]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Areas/Identity/Pages/Account/Authentication.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxBdXRoZW50aWNhdGlvbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Areas/Identity/Pages/Account/logout.cshtml]
+[D:/local1/Blazor/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Areas/Identity/Pages/Account/logout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxsb2dvdXQuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Areas/Identity/Pages/Account/UserLogin.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcSWRlbnRpdHlcUGFnZXNcQWNjb3VudFxVc2VyTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
