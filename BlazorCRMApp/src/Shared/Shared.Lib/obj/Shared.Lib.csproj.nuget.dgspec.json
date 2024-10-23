@@ -1,21 +1,18 @@
 {
   "format": 1,
   "restore": {
-    "D:\\local1\\Blazor\\BlazorCRM\\BlazorCRMApp\\src\\Shared\\Shared.Lib\\Shared.Lib.csproj": {}
+    "E:\\Local\\BlazorCRM\\BlazorCRMApp\\src\\Shared\\Shared.Lib\\Shared.Lib.csproj": {}
   },
   "projects": {
-    "D:\\local1\\Blazor\\BlazorCRM\\BlazorCRMApp\\src\\Shared\\Shared.Lib\\Shared.Lib.csproj": {
+    "E:\\Local\\BlazorCRM\\BlazorCRMApp\\src\\Shared\\Shared.Lib\\Shared.Lib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\local1\\Blazor\\BlazorCRM\\BlazorCRMApp\\src\\Shared\\Shared.Lib\\Shared.Lib.csproj",
+        "projectUniqueName": "E:\\Local\\BlazorCRM\\BlazorCRMApp\\src\\Shared\\Shared.Lib\\Shared.Lib.csproj",
         "projectName": "Shared.Lib",
-        "projectPath": "D:\\local1\\Blazor\\BlazorCRM\\BlazorCRMApp\\src\\Shared\\Shared.Lib\\Shared.Lib.csproj",
+        "projectPath": "E:\\Local\\BlazorCRM\\BlazorCRMApp\\src\\Shared\\Shared.Lib\\Shared.Lib.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\local1\\Blazor\\BlazorCRM\\BlazorCRMApp\\src\\Shared\\Shared.Lib\\obj\\",
+        "outputPath": "E:\\Local\\BlazorCRM\\BlazorCRMApp\\src\\Shared\\Shared.Lib\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -25,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {},
           "https://nuget.kowhiri.com/nuget/Kowhiri/": {}
         },
@@ -65,7 +61,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
