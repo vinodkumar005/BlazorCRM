@@ -18,6 +18,8 @@ namespace Blazor.API.Controllers
             _mapper = mapper;
         }
 
+
+        #region [Designation Master]
         [HttpGet]
         public IActionResult GetDesignations()
         {
@@ -83,5 +85,80 @@ namespace Blazor.API.Controllers
                 return ExceptionErrorResult(BaseResponseMessages.EXCEPTION, exception);
             }
         }
+
+        #endregion
+
+        #region[Country State City]
+        [HttpGet]
+        public IActionResult GetCountries()
+        {
+            try
+            {
+                List<SelectListDto> responseModel = new List<SelectListDto>();
+
+                var result = _masterService.GetCountries();
+                responseModel = _mapper.Map<List<SelectListDto>>(result);
+
+                return SuccessResult(responseModel);
+            }
+            catch (Exception exception)
+            {
+                return ExceptionErrorResult(BaseResponseMessages.EXCEPTION, exception);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetStates(int countryId)
+        {
+            try
+            {
+                List<SelectListDto> responseModel = new List<SelectListDto>();
+
+                var result = _masterService.GetStates(countryId);
+                responseModel = _mapper.Map<List<SelectListDto>>(result);
+
+                return SuccessResult(responseModel);
+            }
+            catch (Exception exception)
+            {
+                return ExceptionErrorResult(BaseResponseMessages.EXCEPTION, exception);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetCities(int stateId)
+        {
+            try
+            {
+                List<SelectListDto> responseModel = new List<SelectListDto>();
+
+                var result = _masterService.GetCities(stateId);
+                responseModel = _mapper.Map<List<SelectListDto>>(result);
+
+                return SuccessResult(responseModel);
+            }
+            catch (Exception exception)
+            {
+                return ExceptionErrorResult(BaseResponseMessages.EXCEPTION, exception);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetTimeZones()
+        {
+            try
+            {
+                List<SelectListDto> responseModel = new List<SelectListDto>();
+                var result = _masterService.GetTimeZones();
+                responseModel = _mapper.Map<List<SelectListDto>>(result);
+
+                return SuccessResult(responseModel);
+            }
+            catch (Exception exception)
+            {
+                return ExceptionErrorResult(BaseResponseMessages.EXCEPTION, exception);
+            }
+        }
+        #endregion
     }
 }

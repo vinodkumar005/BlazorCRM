@@ -1,57 +1,107 @@
 ﻿@page "/designations"
 @using Blazor.Web.Components.Shared
-@attribute [Authorize(Roles = "SuperAdmin")]
+@attribute [Authorize(Roles = "Admin")]
 
-
-
-<div class="table-responsive">
-    <h3>Designation List</h3>
-    <button @onclick="ShowCreateForm">Create New</button>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>
-                    S.No.
-                </th>
-                <th>Name</th>
-                <th>Active</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (!process)
-            {
-                if (designations != null && designations.Count() > 0)
-                {
-                    int count = 1;
-                    foreach (var item in designations)
-                    {
-                        <tr>
-                            <td>@count</td>
-                            <td>@item.Name</td>
-                            <td>@item.IsActive</td>
-                            <td>
-                                <button @onclick="() => EditDesignation(item)">Edit</button>
-                                <button @onclick="() => DeleteDesignation(item.Id,false)">Delete</button>
-                            </td>
-                        </tr>
-                        count++;
-                    }
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="4" class="text-center"><span class="spinner-grow"></span> </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Designation Manager</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Admin Manager</a></li>
+                    <li class="breadcrumb-item active">Designation Manager</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 
 @if (showForm)
 {
-    <DesignationForm OnSave="OnFormSave" editDesignation="selectDesignation" />
+    <DesignationForm OnSave="OnFormSave" OnCancel="CancelForm" editDesignation="selectDesignation" />
 }
 
-                                <ConfirmationPopup @ref="confirmationPopup"/>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            Designation List
+                        </h3>
+                        @if (!showForm)
+                        {
+                            <div class="card-tools">
+                                <button @onclick="ShowCreateForm" class="btn btn-tool btn-primary">Add New</button>
+                            </div>
+                        }
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Name</th>
+                                    <th>Colour</th>
+                                    <th>Modified Date</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (!process)
+                                {
+                                    if (designations != null && designations.Count() > 0)
+                                    {
+                                        int count = 1;
+                                        foreach (var item in designations)
+                                        {
+                                            <tr>
+                                                <td>@count</td>
+                                                <td>@item.Name</td>
+                                                <td><i class="fa fa-circle" style="color:@item.Colour"></i> @item.Colour</td>
+                                                <td>@item.ModifiedDate</td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                            <input type="checkbox" class="custom-control-input" id="customSwitch3" checked="@item.IsActive">
+                                                            <label class="custom-control-label" for="customSwitch3">@item.IsActive</label>
+                                                        </div>
+                                                    </div>                                                    
+                                                </td>
+                                                <td>
+                                                    <button class="btn btn-primary" @onclick="() => EditDesignation(item)">Edit</button>
+                                                    <button class="btn btn-danger" @onclick="() => DeleteDesignation(item.Id,false)">Delete</button>
+                                                </td>
+                                            </tr>
+                                            count++;
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4" class="text-center"><span class="spinner-grow"></span> </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+
+<ConfirmationPopup @ref="confirmationPopup" />

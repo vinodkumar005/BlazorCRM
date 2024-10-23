@@ -1,0 +1,34 @@
+﻿@page "/edit-content-demo"
+@layout EmptyLayout
+
+<EditForm EditContext="editContext">
+    <DataAnnotationsValidator />
+    <ValidationSummary/>
+    <div class="from-group">
+        <InputText @bind-Value="user.Name" class="from-control"/>
+        <ValidationMessage For="(()=>user.Name)" />
+    </div>
+    <div class="from-group">
+        <InputText @bind-Value="user.Role" class="from-control" />
+        <ValidationMessage For="(()=>user.Role)"/>
+    </div>
+    <div class="from-group">
+        <button type="submit">Save</button>
+    </div>
+</EditForm>
+
+@code {
+    private User user = new User();
+    private EditContext editContext;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(user);
+        editContext.OnFieldChanged += HandleFieldChanged;
+    }
+    private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        // Field change logic can go here
+        Console.WriteLine($"{e.FieldIdentifier.FieldName} has changed.");
+    }
+}

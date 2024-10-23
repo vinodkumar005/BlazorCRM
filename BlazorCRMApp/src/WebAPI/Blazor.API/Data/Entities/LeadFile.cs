@@ -20,6 +20,4 @@ public partial class LeadFile
     public DateTime? Date { get; set; }
 
     public virtual UserLogin AddedByNavigation { get; set; }
-
-    public virtual Lead Lead { get; set; }
 }

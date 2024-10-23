@@ -10,6 +10,12 @@ namespace Blazor.Web.Services
         Task<BaseApiResponseDto<bool>> ManageDesignation(DesignationRequestDto model);
         Task<BaseApiResponseDto<bool>> DeleteDesignation(int id);
         #endregion
+
+        #region[Country State City]
+        Task<BaseApiResponseDto<List<SelectListDto>>> GetCountries();
+        Task<BaseApiResponseDto<List<SelectListDto>>> GetStates(int countryId);
+        Task<BaseApiResponseDto<List<SelectListDto>>> GetCities(int stateId);
+        #endregion
     }
     public class MasterService : IMasterService
     {
@@ -41,5 +47,21 @@ namespace Blazor.Web.Services
         }
         #endregion
 
+        #region[Country State City]
+        public async Task<BaseApiResponseDto<List<SelectListDto>>> GetCountries()
+        {
+            return await httpService.GetAsync<List<SelectListDto>>($"Master/GetCountries");
+        }
+
+        public async Task<BaseApiResponseDto<List<SelectListDto>>> GetStates(int countryId)
+        {
+            return await httpService.GetAsync<List<SelectListDto>>($"Master/GetStates?countryId={countryId}");
+        }
+
+        public async Task<BaseApiResponseDto<List<SelectListDto>>> GetCities(int stateId)
+        {
+            return await httpService.GetAsync<List<SelectListDto>>($"Master/GetCities?stateId={stateId}");
+        }
+        #endregion
     }
 }

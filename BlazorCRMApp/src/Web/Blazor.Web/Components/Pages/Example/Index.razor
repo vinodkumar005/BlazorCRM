@@ -1,0 +1,31 @@
+﻿@page "/fragment-demo"
+@layout EmptyLayout
+
+
+<section class="content">
+    <div class="row">
+        <Card Title="Card 1">
+            <bodyContent>
+                <ChildComponent/>
+            </bodyContent>
+            <footerContent>
+                This is footer content
+            </footerContent>
+        </Card>
+    </div>
+</section>
+
+
+
+
+@code {
+
+    [Inject]
+    IJSRuntime JSRuntime { get; set; } = default!;
+
+    public async void ShowAlert()
+    {
+        await JSRuntime.InvokeVoidAsync("alert", "Button clicked!");
+    }
+}
+

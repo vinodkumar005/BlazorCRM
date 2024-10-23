@@ -16,6 +16,8 @@ public partial class ApplicationDbContext : DbContext
     {
     }
 
+    public virtual DbSet<AdditionalFieldData> AdditionalFieldData { get; set; }
+
     public virtual DbSet<AdminCalendar> AdminCalendar { get; set; }
 
     public virtual DbSet<AdminCalendarUsers> AdminCalendarUsers { get; set; }
@@ -48,9 +50,17 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Carrier> Carrier { get; set; }
 
-    public virtual DbSet<Country> Country { get; set; }
+    public virtual DbSet<CityMaster> CityMaster { get; set; }
+
+    public virtual DbSet<CountryMaster> CountryMaster { get; set; }
+
+    public virtual DbSet<CultureMaster> CultureMaster { get; set; }
+
+    public virtual DbSet<CurrencyMaster> CurrencyMaster { get; set; }
 
     public virtual DbSet<DesignationMaster> DesignationMaster { get; set; }
+
+    public virtual DbSet<DesignationPermission> DesignationPermission { get; set; }
 
     public virtual DbSet<EmailTemplate> EmailTemplate { get; set; }
 
@@ -58,17 +68,19 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<FlagMaster> FlagMaster { get; set; }
 
-    public virtual DbSet<Lead> Lead { get; set; }
+    public virtual DbSet<LeadCategoryMaster> LeadCategoryMaster { get; set; }
 
     public virtual DbSet<LeadComment> LeadComment { get; set; }
 
     public virtual DbSet<LeadConversation> LeadConversation { get; set; }
 
+    public virtual DbSet<LeadEvent> LeadEvent { get; set; }
+
     public virtual DbSet<LeadFile> LeadFile { get; set; }
 
-    public virtual DbSet<LeadLog> LeadLog { get; set; }
-
     public virtual DbSet<LeadNote> LeadNote { get; set; }
+
+    public virtual DbSet<LeadQualityMaster> LeadQualityMaster { get; set; }
 
     public virtual DbSet<LeadSourceMaster> LeadSourceMaster { get; set; }
 
@@ -78,23 +90,31 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<LeadStoreLeadTypes> LeadStoreLeadTypes { get; set; }
 
-    public virtual DbSet<LeadStoreLeads> LeadStoreLeads { get; set; }
-
     public virtual DbSet<LeadStoreLog> LeadStoreLog { get; set; }
 
     public virtual DbSet<LeadStoreOrderDetails> LeadStoreOrderDetails { get; set; }
 
+    public virtual DbSet<Leads> Leads { get; set; }
+
+    public virtual DbSet<LeadsLog> LeadsLog { get; set; }
+
     public virtual DbSet<Menu> Menu { get; set; }
 
+    public virtual DbSet<MenuItem> MenuItem { get; set; }
+
     public virtual DbSet<Plan> Plan { get; set; }
+
+    public virtual DbSet<PriorityMaster> PriorityMaster { get; set; }
 
     public virtual DbSet<Product> Product { get; set; }
 
     public virtual DbSet<Role> Role { get; set; }
 
-    public virtual DbSet<State> State { get; set; }
+    public virtual DbSet<StateMaster> StateMaster { get; set; }
 
     public virtual DbSet<StatePlan> StatePlan { get; set; }
+
+    public virtual DbSet<StatusUpdateMaster> StatusUpdateMaster { get; set; }
 
     public virtual DbSet<UserCalendar> UserCalendar { get; set; }
 
@@ -110,9 +130,26 @@ public partial class ApplicationDbContext : DbContext
 
     public virtual DbSet<Users> Users { get; set; }
 
-   
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<AdditionalFieldData>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Addition__3214EC075D6ACCE9");
+
+            entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+            entity.Property(e => e.FieldName)
+                .IsRequired()
+                .HasMaxLength(350);
+            entity.Property(e => e.Required).HasDefaultValueSql("('0')");
+            entity.Property(e => e.UpdateOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Flag).WithMany(p => p.AdditionalFieldData)
+                .HasForeignKey(d => d.FlagId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_FlagMaster");
+        });
+
         modelBuilder.Entity<AdminCalendar>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__AdminCal__3214EC07BA9CA427");
@@ -128,13 +165,11 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.AdminCalendar).WithMany(p => p.AdminCalendarUsers)
                 .HasForeignKey(d => d.AdminCalendarId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AdminCalendarAgents_AdminCalendar_AdminCalendarId");
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             entity.HasOne(d => d.User).WithMany(p => p.AdminCalendarUsers)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AdminCalendarAgents_Agent_AgentId");
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<AdminDocuments>(entity =>
@@ -165,7 +200,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.State).WithMany(p => p.AdminLead)
                 .HasForeignKey(d => d.StateId)
-                .HasConstraintName("FK_Adminlead_State");
+                .HasConstraintName("FK_Adminlead_StateMaster");
         });
 
         modelBuilder.Entity<AdminLeadComment>(entity =>
@@ -230,8 +265,7 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.AdminNotes)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AdminNotes_Agent_AgentId");
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Agency>(entity =>
@@ -352,8 +386,6 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(50);
             entity.Property(e => e.CreateDate).HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(200);
-
-            entity.HasOne(d => d.Lead).WithMany(p => p.AlternateContactDetail).HasForeignKey(d => d.LeadId);
         });
 
         modelBuilder.Entity<Carrier>(entity =>
@@ -372,23 +404,75 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
         });
 
-        modelBuilder.Entity<Country>(entity =>
+        modelBuilder.Entity<CityMaster>(entity =>
         {
-            entity.Property(e => e.CountryCode).HasMaxLength(5);
-            entity.Property(e => e.CreateDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.ModifyDate).HasColumnType("datetime");
-            entity.Property(e => e.Name).HasMaxLength(250);
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name).HasMaxLength(50);
+            entity.Property(e => e.StateId).HasColumnName("StateID");
+
+            entity.HasOne(d => d.State).WithMany(p => p.CityMaster)
+                .HasForeignKey(d => d.StateId)
+                .HasConstraintName("FK_CityMaster_StateMaster");
+        });
+
+        modelBuilder.Entity<CountryMaster>(entity =>
+        {
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CountryCode)
+                .HasMaxLength(5)
+                .IsUnicode(false);
+            entity.Property(e => e.Name).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<CultureMaster>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__CultureM__3214EC0712CD20F2");
+
+            entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.CurrencyCode).WithMany(p => p.CultureMaster)
+                .HasForeignKey(d => d.CurrencyCodeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__CultureMa__Curre__3F865F66");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.CultureMaster)
+                .HasForeignKey(d => d.ModifiedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__CultureMa__Modif__407A839F");
+        });
+
+        modelBuilder.Entity<CurrencyMaster>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Currency__3214EC0770D9B049");
+
+            entity.Property(e => e.CurrencyCode)
+                .IsRequired()
+                .HasMaxLength(10);
+            entity.Property(e => e.CurrencyDisplayName)
+                .IsRequired()
+                .HasMaxLength(50);
         });
 
         modelBuilder.Entity<DesignationMaster>(entity =>
         {
+            entity.Property(e => e.Colour)
+                .IsRequired()
+                .HasMaxLength(50);
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
             entity.Property(e => e.Name)
                 .IsRequired()
                 .HasMaxLength(250);
+        });
+
+        modelBuilder.Entity<DesignationPermission>(entity =>
+        {
+            entity.Property(e => e.CreationOn).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Designation).WithMany(p => p.DesignationPermission)
+                .HasForeignKey(d => d.DesignationId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_DesignationPermission_DesignationPermission");
         });
 
         modelBuilder.Entity<EmailTemplate>(entity =>
@@ -430,40 +514,16 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.FlagName)
                 .IsRequired()
                 .HasMaxLength(250);
+            entity.Property(e => e.IsHidden)
+                .IsRequired()
+                .HasDefaultValueSql("((1))");
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
         });
 
-        modelBuilder.Entity<Lead>(entity =>
+        modelBuilder.Entity<LeadCategoryMaster>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__AgentLea__3214EC076536DA7E");
-
-            entity.Property(e => e.Address1).HasMaxLength(1500);
-            entity.Property(e => e.Address2).HasMaxLength(1500);
-            entity.Property(e => e.City).HasMaxLength(200);
-            entity.Property(e => e.CompanyName).HasMaxLength(1000);
-            entity.Property(e => e.DriverLicenseNumber).HasMaxLength(200);
-            entity.Property(e => e.EffectiveDate).HasColumnType("datetime");
-            entity.Property(e => e.Email).HasMaxLength(100);
-            entity.Property(e => e.FirstName).HasMaxLength(400);
-            entity.Property(e => e.Height).HasMaxLength(50);
-            entity.Property(e => e.LastName).HasMaxLength(200);
-            entity.Property(e => e.MainContactName).HasMaxLength(1000);
-            entity.Property(e => e.MiddleName).HasMaxLength(200);
-            entity.Property(e => e.MobileNumber).HasMaxLength(50);
-            entity.Property(e => e.MotherMaidenName).HasMaxLength(400);
-            entity.Property(e => e.Occupation).HasMaxLength(500);
-            entity.Property(e => e.Phone).HasMaxLength(50);
-            entity.Property(e => e.Source).HasMaxLength(2000);
-            entity.Property(e => e.Weight).HasMaxLength(50);
-            entity.Property(e => e.ZipCode).HasMaxLength(20);
-
-            entity.HasOne(d => d.State).WithMany(p => p.Lead)
-                .HasForeignKey(d => d.StateId)
-                .HasConstraintName("FK_AgentLead_State_StateId");
-
-            entity.HasOne(d => d.User).WithMany(p => p.Lead)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_AgentLead_Agent_AgentId");
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<LeadComment>(entity =>
@@ -473,8 +533,6 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.AddedByNavigation).WithMany(p => p.LeadComment)
                 .HasForeignKey(d => d.AddedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull);
-
-            entity.HasOne(d => d.Lead).WithMany(p => p.LeadComment).HasForeignKey(d => d.LeadId);
         });
 
         modelBuilder.Entity<LeadConversation>(entity =>
@@ -484,8 +542,25 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.AddedByNavigation).WithMany(p => p.LeadConversation)
                 .HasForeignKey(d => d.AddedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+        });
 
-            entity.HasOne(d => d.Lead).WithMany(p => p.LeadConversation).HasForeignKey(d => d.LeadId);
+        modelBuilder.Entity<LeadEvent>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__LeadEven__3214EC074AA76B8C");
+
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.EventDate).HasColumnType("datetime");
+            entity.Property(e => e.Note).IsRequired();
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.LeadEventCreatedByNavigation)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__LeadEvent__Creat__100C566E");
+
+            entity.HasOne(d => d.User).WithMany(p => p.LeadEventUser)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__LeadEvent__UserI__0F183235");
         });
 
         modelBuilder.Entity<LeadFile>(entity =>
@@ -498,19 +573,6 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.AddedByNavigation).WithMany(p => p.LeadFile)
                 .HasForeignKey(d => d.AddedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull);
-
-            entity.HasOne(d => d.Lead).WithMany(p => p.LeadFile).HasForeignKey(d => d.LeadId);
-        });
-
-        modelBuilder.Entity<LeadLog>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__LeadLog__3214EC07A093C61C");
-
-            entity.HasOne(d => d.AddedByNavigation).WithMany(p => p.LeadLog)
-                .HasForeignKey(d => d.AddedBy)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            entity.HasOne(d => d.Lead).WithMany(p => p.LeadLog).HasForeignKey(d => d.LeadId);
         });
 
         modelBuilder.Entity<LeadNote>(entity =>
@@ -521,7 +583,16 @@ public partial class ApplicationDbContext : DbContext
                 .HasForeignKey(d => d.AddedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
-            entity.HasOne(d => d.Lead).WithMany(p => p.LeadNote).HasForeignKey(d => d.LeadId);
+            entity.HasOne(d => d.Lead).WithMany(p => p.LeadNote)
+                .HasForeignKey(d => d.LeadId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_LeadNote_Leads");
+        });
+
+        modelBuilder.Entity<LeadQualityMaster>(entity =>
+        {
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<LeadSourceMaster>(entity =>
@@ -557,45 +628,6 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(50);
         });
 
-        modelBuilder.Entity<LeadStoreLeads>(entity =>
-        {
-            entity.HasKey(e => e.Id).HasName("PK__LeadStor__3214EC07BAAD59DD");
-
-            entity.Property(e => e.Address1).HasMaxLength(1500);
-            entity.Property(e => e.Address2).HasMaxLength(1500);
-            entity.Property(e => e.City).HasMaxLength(200);
-            entity.Property(e => e.DriverLicenseNumber).HasMaxLength(200);
-            entity.Property(e => e.Email).HasMaxLength(100);
-            entity.Property(e => e.FirstName).HasMaxLength(400);
-            entity.Property(e => e.Height).HasMaxLength(50);
-            entity.Property(e => e.IsSold).HasColumnName("isSold");
-            entity.Property(e => e.LastName).HasMaxLength(200);
-            entity.Property(e => e.MiddleName).HasMaxLength(200);
-            entity.Property(e => e.MobileNumber).HasMaxLength(50);
-            entity.Property(e => e.MotherMaidenName).HasMaxLength(400);
-            entity.Property(e => e.Occupation).HasMaxLength(500);
-            entity.Property(e => e.OrderNumber)
-                .HasMaxLength(12)
-                .IsFixedLength();
-            entity.Property(e => e.Phone).HasMaxLength(50);
-            entity.Property(e => e.Source).HasMaxLength(2000);
-            entity.Property(e => e.Weight).HasMaxLength(50);
-            entity.Property(e => e.WorkPhone)
-                .HasMaxLength(50)
-                .IsFixedLength();
-            entity.Property(e => e.ZipCode).HasMaxLength(20);
-
-            entity.HasOne(d => d.LeadTypeNavigation).WithMany(p => p.LeadStoreLeads).HasForeignKey(d => d.LeadType);
-
-            entity.HasOne(d => d.Log).WithMany(p => p.LeadStoreLeads).HasForeignKey(d => d.LogId);
-
-            entity.HasOne(d => d.State).WithMany(p => p.LeadStoreLeads).HasForeignKey(d => d.StateId);
-
-            entity.HasOne(d => d.User).WithMany(p => p.LeadStoreLeads)
-                .HasForeignKey(d => d.UserId)
-                .HasConstraintName("FK_LeadStoreLeads_Agent");
-        });
-
         modelBuilder.Entity<LeadStoreLog>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__LeadStor__3214EC07841DB80E");
@@ -618,6 +650,110 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Cart).WithMany(p => p.LeadStoreOrderDetails).HasForeignKey(d => d.CartId);
         });
 
+        modelBuilder.Entity<Leads>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__LeadStor__3214EC07BAAD59DD");
+
+            entity.Property(e => e.Crmtype).HasColumnName("CRMType");
+            entity.Property(e => e.Email).HasMaxLength(100);
+            entity.Property(e => e.EmailOtp)
+                .HasMaxLength(10)
+                .HasColumnName("EmailOTP");
+            entity.Property(e => e.EmailOtptime)
+                .HasColumnType("datetime")
+                .HasColumnName("EmailOTPTime");
+            entity.Property(e => e.FirstName).HasMaxLength(400);
+            entity.Property(e => e.IsSold).HasColumnName("isSold");
+            entity.Property(e => e.LastName).HasMaxLength(200);
+            entity.Property(e => e.LeadAssignedDate).HasColumnType("datetime");
+            entity.Property(e => e.MobileNumber).HasMaxLength(50);
+            entity.Property(e => e.MobileOtp)
+                .HasMaxLength(10)
+                .HasColumnName("MobileOTP");
+            entity.Property(e => e.MobileOtptime)
+                .HasColumnType("datetime")
+                .HasColumnName("MobileOTPTime");
+            entity.Property(e => e.OrderNumber)
+                .HasMaxLength(12)
+                .IsFixedLength();
+            entity.Property(e => e.Phone).HasMaxLength(50);
+            entity.Property(e => e.TempEmailOtp)
+                .HasMaxLength(10)
+                .HasColumnName("TempEmailOTP");
+            entity.Property(e => e.TempMobileOtp)
+                .HasMaxLength(10)
+                .HasColumnName("TempMobileOTP");
+            entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
+            entity.Property(e => e.ZipCode).HasMaxLength(20);
+
+            entity.HasOne(d => d.City).WithMany(p => p.Leads)
+                .HasForeignKey(d => d.CityId)
+                .HasConstraintName("FK_Leads_CityMaster");
+
+            entity.HasOne(d => d.Country).WithMany(p => p.Leads)
+                .HasForeignKey(d => d.CountryId)
+                .HasConstraintName("FK_Leads_CountryMaster");
+
+            entity.HasOne(d => d.Flag).WithMany(p => p.Leads)
+                .HasForeignKey(d => d.FlagId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Leads_FlagMaster");
+
+            entity.HasOne(d => d.LeadCategory).WithMany(p => p.Leads)
+                .HasForeignKey(d => d.LeadCategoryId)
+                .HasConstraintName("FK__Leads__LeadCateg__51A50FA1");
+
+            entity.HasOne(d => d.LeadQuality).WithMany(p => p.Leads)
+                .HasForeignKey(d => d.LeadQualityId)
+                .HasConstraintName("FK__Leads__LeadQuali__529933DA");
+
+            entity.HasOne(d => d.LeadSource).WithMany(p => p.Leads)
+                .HasForeignKey(d => d.LeadSourceId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Leads_LeadSourceMaster");
+
+            entity.HasOne(d => d.Log).WithMany(p => p.Leads)
+                .HasForeignKey(d => d.LogId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_Leads_LeadsLog_LogId");
+
+            entity.HasOne(d => d.Priority).WithMany(p => p.Leads)
+                .HasForeignKey(d => d.PriorityId)
+                .HasConstraintName("FK_Leads_PriorityMaster");
+
+            entity.HasOne(d => d.State).WithMany(p => p.Leads).HasForeignKey(d => d.StateId);
+
+            entity.HasOne(d => d.User).WithMany(p => p.Leads)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK_Leads_UserLogin");
+        });
+
+        modelBuilder.Entity<LeadsLog>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__LeadStor__3214EC07893EBD7C");
+
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.CreatedByNavigation).WithMany(p => p.LeadsLogCreatedByNavigation)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_LeadsLog_UserLogin");
+
+            entity.HasOne(d => d.Flag).WithMany(p => p.LeadsLog)
+                .HasForeignKey(d => d.FlagId)
+                .HasConstraintName("FK__LeadsLog__FlagId__416EA7D8");
+
+            entity.HasOne(d => d.Lead).WithMany(p => p.LeadsLog)
+                .HasForeignKey(d => d.LeadId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_LeadsLog_Leads");
+
+            entity.HasOne(d => d.ModifiedByNavigation).WithMany(p => p.LeadsLogModifiedByNavigation)
+                .HasForeignKey(d => d.ModifiedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_LeadsLog_UserLogin1");
+        });
+
         modelBuilder.Entity<Menu>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Menu__3214EC07B3F86410");
@@ -629,6 +765,29 @@ public partial class ApplicationDbContext : DbContext
                 .IsUnicode(false);
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
             entity.Property(e => e.Url).HasMaxLength(150);
+        });
+
+        modelBuilder.Entity<MenuItem>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_MenuItems");
+
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.MenuIcon)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.MenuName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.MenuUrl)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            entity.Property(e => e.SubMenuIcon)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+            entity.Property(e => e.SubMenuName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Plan>(entity =>
@@ -645,6 +804,18 @@ public partial class ApplicationDbContext : DbContext
             entity.HasOne(d => d.Product).WithMany(p => p.Plan)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+        modelBuilder.Entity<PriorityMaster>(entity =>
+        {
+            entity.Property(e => e.Color)
+                .IsRequired()
+                .HasMaxLength(250);
+            entity.Property(e => e.CreatedDate).HasColumnType("datetime");
+            entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
+            entity.Property(e => e.Title)
+                .IsRequired()
+                .HasMaxLength(250);
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -672,19 +843,15 @@ public partial class ApplicationDbContext : DbContext
                 .HasMaxLength(200);
         });
 
-        modelBuilder.Entity<State>(entity =>
+        modelBuilder.Entity<StateMaster>(entity =>
         {
-            entity.Property(e => e.CreateDate)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.ModifyDate).HasColumnType("datetime");
-            entity.Property(e => e.Name).HasMaxLength(256);
-            entity.Property(e => e.StateCode).HasMaxLength(5);
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.CountryId).HasColumnName("CountryID");
+            entity.Property(e => e.Name).HasMaxLength(50);
 
-            entity.HasOne(d => d.Country).WithMany(p => p.State)
+            entity.HasOne(d => d.Country).WithMany(p => p.StateMaster)
                 .HasForeignKey(d => d.CountryId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_Country_State");
+                .HasConstraintName("FK_StateMaster_CountryMaster");
         });
 
         modelBuilder.Entity<StatePlan>(entity =>
@@ -700,9 +867,28 @@ public partial class ApplicationDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
+        modelBuilder.Entity<StatusUpdateMaster>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__StatusUp__3214EC07AFE3B139");
+
+            entity.Property(e => e.CreateDate).HasColumnType("datetime");
+            entity.Property(e => e.StatusUpdateRecords).IsRequired();
+            entity.Property(e => e.UpdateDate).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Flag).WithMany(p => p.StatusUpdateMaster)
+                .HasForeignKey(d => d.FlagId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__StatusUpd__FlagI__679450C0");
+
+            entity.HasOne(d => d.Lead).WithMany(p => p.StatusUpdateMaster)
+                .HasForeignKey(d => d.LeadId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__StatusUpd__LeadI__66A02C87");
+        });
+
         modelBuilder.Entity<UserCalendar>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__AgentCal__3214EC079BE6D23D");
+            entity.HasKey(e => e.Id).HasName("PK__UserCal__3214EC079BE6D23D");
 
             entity.Property(e => e.Description).HasMaxLength(3000);
             entity.Property(e => e.Location).HasMaxLength(2000);
@@ -710,25 +896,22 @@ public partial class ApplicationDbContext : DbContext
 
             entity.HasOne(d => d.User).WithMany(p => p.UserCalendar)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AgentCalendar_Agent_AgentId");
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<UserCarrier>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__AgentCar__3214EC07A2C78AB2");
+            entity.HasKey(e => e.Id).HasName("PK__UserCar__3214EC07A2C78AB2");
 
             entity.Property(e => e.CarrierUserId).HasMaxLength(100);
 
             entity.HasOne(d => d.Carrier).WithMany(p => p.UserCarrier)
                 .HasForeignKey(d => d.CarrierId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AgentCarrier_Carrier_CarrierId");
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             entity.HasOne(d => d.User).WithMany(p => p.UserCarrier)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AgentCarrier_Agent_AgentId");
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<UserLogin>(entity =>
@@ -737,6 +920,8 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.CreateDate).HasColumnType("datetime");
             entity.Property(e => e.ForgetPasswordExpirationDate).HasColumnType("datetime");
             entity.Property(e => e.ForgetPasswordLink).HasMaxLength(256);
+            entity.Property(e => e.LastLoginDate).HasColumnType("datetime");
+            entity.Property(e => e.LastPasswordChangeDate).HasColumnType("datetime");
             entity.Property(e => e.ModifyDate).HasColumnType("datetime");
             entity.Property(e => e.Password)
                 .IsRequired()
@@ -756,7 +941,7 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<UserOpportunity>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__AgentOpp__3214EC07C44A62BC");
+            entity.HasKey(e => e.Id).HasName("PK__UserOpp__3214EC07C44A62BC");
 
             entity.Property(e => e.Address1).HasMaxLength(1500);
             entity.Property(e => e.Address2).HasMaxLength(1500);
@@ -775,34 +960,29 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.Weight).HasMaxLength(50);
             entity.Property(e => e.ZipCode).HasMaxLength(20);
 
-            entity.HasOne(d => d.State).WithMany(p => p.UserOpportunity)
-                .HasForeignKey(d => d.StateId)
-                .HasConstraintName("FK_AgentOpportunity_State_StateId");
+            entity.HasOne(d => d.State).WithMany(p => p.UserOpportunity).HasForeignKey(d => d.StateId);
 
             entity.HasOne(d => d.User).WithMany(p => p.UserOpportunity)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AgentOpportunity_Agent_AgentId");
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<UserProduct>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__AgentPro__3214EC070E320F34");
+            entity.HasKey(e => e.Id).HasName("PK__UserPro__3214EC070E320F34");
 
             entity.HasOne(d => d.Carrier).WithMany(p => p.UserProduct)
                 .HasForeignKey(d => d.CarrierId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AgentProduct_Carrier_CarrierId");
+                .OnDelete(DeleteBehavior.ClientSetNull);
 
             entity.HasOne(d => d.Product).WithMany(p => p.UserProduct)
                 .HasForeignKey(d => d.ProductId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AgentProduct_Product");
+                .HasConstraintName("FK_UserProduct_Product");
 
             entity.HasOne(d => d.User).WithMany(p => p.UserProduct)
                 .HasForeignKey(d => d.UserId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_AgentProduct_Agent_AgentId");
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<UserTimeZones>(entity =>
@@ -820,10 +1000,10 @@ public partial class ApplicationDbContext : DbContext
 
         modelBuilder.Entity<Users>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Agent__3214EC079F6CC205");
+            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC079F6CC205");
 
             entity.Property(e => e.BodyBackGroundColor).HasMaxLength(50);
-            entity.Property(e => e.City).HasMaxLength(100);
+            entity.Property(e => e.Colour).HasMaxLength(50);
             entity.Property(e => e.CreateDate).HasColumnType("datetime");
             entity.Property(e => e.Dob)
                 .HasColumnType("datetime")
@@ -860,6 +1040,14 @@ public partial class ApplicationDbContext : DbContext
             entity.Property(e => e.TwitterLink).HasMaxLength(200);
             entity.Property(e => e.ZipCode).HasMaxLength(20);
 
+            entity.HasOne(d => d.City).WithMany(p => p.Users)
+                .HasForeignKey(d => d.CityId)
+                .HasConstraintName("FK_Users_CityMaster");
+
+            entity.HasOne(d => d.Country).WithMany(p => p.Users)
+                .HasForeignKey(d => d.CountryId)
+                .HasConstraintName("FK_Users_Country");
+
             entity.HasOne(d => d.Designation).WithMany(p => p.Users)
                 .HasForeignKey(d => d.DesignationId)
                 .HasConstraintName("FK_Users_DesignationMaster");
@@ -868,14 +1056,11 @@ public partial class ApplicationDbContext : DbContext
                 .HasForeignKey(d => d.ParentId)
                 .HasConstraintName("FK_Users_UserLogin");
 
-            entity.HasOne(d => d.State).WithMany(p => p.Users)
-                .HasForeignKey(d => d.StateId)
-                .HasConstraintName("FK_Agent_State_StateId");
+            entity.HasOne(d => d.State).WithMany(p => p.Users).HasForeignKey(d => d.StateId);
 
-            entity.HasOne(d => d.UserLogin).WithMany(p => p.Users)
+            entity.HasOne(d => d.UserLogin).WithMany(p => p.UsersUserLogin)
                 .HasForeignKey(d => d.UserLoginId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Agent_UserLogin_UserLoginId");
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         OnModelCreatingPartial(modelBuilder);

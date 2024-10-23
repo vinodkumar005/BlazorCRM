@@ -14,6 +14,4 @@ public partial class AlternateContactDetail
     public string Email { get; set; }
 
     public DateTime? CreateDate { get; set; }
-
-    public virtual Lead Lead { get; set; }
 }

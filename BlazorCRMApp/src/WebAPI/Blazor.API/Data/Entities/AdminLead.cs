@@ -39,5 +39,5 @@ public partial class AdminLead
 
     public virtual ICollection<AdminLeadNote> AdminLeadNote { get; } = new List<AdminLeadNote>();
 
-    public virtual State State { get; set; }
+    public virtual StateMaster State { get; set; }
 }

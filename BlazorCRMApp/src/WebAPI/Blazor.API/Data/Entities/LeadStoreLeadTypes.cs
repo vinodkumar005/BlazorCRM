@@ -26,6 +26,4 @@ public partial class LeadStoreLeadTypes
     public int? LeadTypeIdForExcel { get; set; }
 
     public virtual ICollection<LeadStoreFilter> LeadStoreFilter { get; } = new List<LeadStoreFilter>();
-
-    public virtual ICollection<LeadStoreLeads> LeadStoreLeads { get; } = new List<LeadStoreLeads>();
 }

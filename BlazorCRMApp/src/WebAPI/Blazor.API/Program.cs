@@ -1,6 +1,7 @@
 using AutoMapper;
 using Blazor.API.Infrastructure.AutoMapperProfiles;
 using Blazor.API.Services;
+using LMS.Service.Permission;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,10 +20,11 @@ builder.Services.AddDbContext<Blazor.API.Data.ApplicationDbContext>(options =>
 builder.Services.AddScoped<IMasterService, MasterService>();
 builder.Services.AddScoped<IUserLoginService, UserLoginService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IDesignationPermissionService, DesignationPermissionService>();
 
 var mapperConfig = new MapperConfiguration(mc =>
 {
-    mc.AddProfile(new DesignationProfile());
+    mc.AddProfile(new MasterProfile());
 });
 IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);

@@ -3,21 +3,23 @@
 
 <PageTitle>Home</PageTitle>
 
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Dashboard</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
 
-<h1>UserName: @userName</h1>
-<h1>Email: @email</h1>
-<h1>Address: @address</h1>
-<h1>Company: @company</h1>
+<CascadingValue Value="this">
+    <ParentComponent />
+</CascadingValue>
 
-
-@* <CascadingValue Value="theme">
-    <CascadingValue Value="currentUser">
-        <ParentComponent />
-    </CascadingValue>
-</CascadingValue> *@
 @code {
 
-    private string theme = "dark";
+    public string theme = "Dark";
 
     public User currentUser = new User
         {
@@ -25,34 +27,49 @@
             Role = "Developer"
         };
 
-
-
-
-
-
-    [CascadingParameter]
-    private Task<AuthenticationState> authenticationStateTask { get; set; }
-
-    private int currentCount = 0;
-    string userName = string.Empty;
-    string email = string.Empty;
-    string address = string.Empty;
-    string company = string.Empty;
-
-    protected override async void OnAfterRender(bool firstRender)
+    public void UpdateTheme(string changeTheme)
     {
-        if (firstRender)
-        {
-            var response = await authenticationStateTask;
-
-            if (response.User.Identity.IsAuthenticated)
-            {
-                userName = response.User.Identity.Name;
-                email = response.User.FindFirst("Email")?.Value;
-                address = response.User.FindFirst("Address")?.Value;
-                company = response.User.FindFirst("Company")?.Value;
-            }
-            StateHasChanged();
-        }
+        theme = changeTheme;
     }
+
+
+
+
+    // [CascadingParameter]
+    // private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    // private int currentCount = 0;
+    // string userName = string.Empty;
+    // string email = string.Empty;
+    // string address = string.Empty;
+    // string company = string.Empty;
+
+    // protected override async void OnAfterRender(bool firstRender)
+    // {
+    //     if (firstRender)
+    //     {
+    //         var response = await authenticationStateTask;
+
+    //         if (response.User.Identity.IsAuthenticated)
+    //         {
+    //             userName = response.User.Identity.Name;
+    //             email = response.User.FindFirst("Email")?.Value;
+    //             address = response.User.FindFirst("Address")?.Value;
+    //             company = response.User.FindFirst("Company")?.Value;
+    //         }
+    //         StateHasChanged();
+    //     }
+    // }
 }
+
+
+        @* <!-- Main content -->
+<section class="content">
+    <h1>UserName: @userName</h1>
+    <h1>Email: @email</h1>
+    <h1>Address: @address</h1>
+    <h1>Company: @company</h1>
+</section><!-- /.content -->
+
+
+ *@

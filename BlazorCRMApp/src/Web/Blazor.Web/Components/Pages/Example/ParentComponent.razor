@@ -1,14 +1,10 @@
-﻿<h3>ParentComponent</h3>
+﻿@layout EmptyLayout
 
-@if (currentUser != null)
-{
-    <h1>Name @currentUser.Name</h1>
-    <h1>Role @currentUser.Role</h1>
-}
---------------------------------
+<h3>ParentComponent</h3>
+
+
 <ChildComponent />
 
 @code {
-    [CascadingParameter]
-    public User currentUser { get; set; }
+   
 }

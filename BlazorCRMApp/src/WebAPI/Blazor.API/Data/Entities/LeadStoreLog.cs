@@ -19,5 +19,5 @@ public partial class LeadStoreLog
 
     public virtual UserLogin AddedByNavigation { get; set; }
 
-    public virtual ICollection<LeadStoreLeads> LeadStoreLeads { get; } = new List<LeadStoreLeads>();
+    public virtual ICollection<Leads> Leads { get; } = new List<Leads>();
 }
