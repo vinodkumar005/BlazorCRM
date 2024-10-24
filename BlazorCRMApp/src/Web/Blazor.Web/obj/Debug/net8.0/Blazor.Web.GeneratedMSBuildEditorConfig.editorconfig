@@ -114,8 +114,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcQ29uZmlybWF0aW9uUG9wdXAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Shared/DialogComponent.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcRGlhbG9nQ29tcG9uZW50LnJhem9y
+[E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/Shared/ListingLoaderComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xTaGFyZWRcTGlzdGluZ0xvYWRlckNvbXBvbmVudC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [E:/Local/BlazorCRM/BlazorCRMApp/src/Web/Blazor.Web/Components/_Imports.razor]

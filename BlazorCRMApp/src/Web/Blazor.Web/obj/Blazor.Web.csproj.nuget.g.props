@@ -13,6 +13,6 @@
     <SourceRoot Include="C:\Users\Admin\.nuget\packages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)microsoft.fluentui.aspnetcore.components\4.10.2\buildTransitive\Microsoft.FluentUI.AspNetCore.Components.props" Condition="Exists('$(NuGetPackageRoot)microsoft.fluentui.aspnetcore.components\4.10.2\buildTransitive\Microsoft.FluentUI.AspNetCore.Components.props')" />
+    <Import Project="$(NuGetPackageRoot)radzen.blazor\5.3.5\buildTransitive\Radzen.Blazor.props" Condition="Exists('$(NuGetPackageRoot)radzen.blazor\5.3.5\buildTransitive\Radzen.Blazor.props')" />
   </ImportGroup>
 </Project>

@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using Radzen.Blazor
+@inherits LayoutComponentBase
 
 
 <AuthorizeView>
@@ -11,11 +12,7 @@
                     @Body
                 </div>
             </div>
-            <FluentToastProvider />
-            <FluentDialogProvider />
-            <FluentTooltipProvider />
-            <FluentMessageBarProvider />
-            <FluentMenuProvider />
+             <RadzenComponents />
         </main>
     </Authorized>
     <NotAuthorized>

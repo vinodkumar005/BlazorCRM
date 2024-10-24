@@ -1,5 +1,6 @@
 ﻿@page "/designations"
 @using Blazor.Web.Components.Shared
+@using global::Shared.Lib.Enums
 @attribute [Authorize(Roles = "Admin")]
 
 <!-- Content Header (Page header) -->
@@ -10,10 +11,12 @@
                 <h1>Designation Manager</h1>
             </div>
             <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Admin Manager</a></li>
-                    <li class="breadcrumb-item active">Designation Manager</li>
-                </ol>
+                <div class="float-sm-right">
+                    @if (!showForm)
+                    {
+                        <button @onclick="ShowCreateForm" class="btn btn-primary">Add New</button>
+                    }
+                </div>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -23,85 +26,174 @@
 {
     <DesignationForm OnSave="OnFormSave" OnCancel="CancelForm" editDesignation="selectDesignation" />
 }
-
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            Designation List
-                        </h3>
-                        @if (!showForm)
+else
+{
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        @if (!process)
                         {
-                            <div class="card-tools">
-                                <button @onclick="ShowCreateForm" class="btn btn-tool btn-primary">Add New</button>
+
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    Designations
+                                </h3>
+                                <div class="card-tools">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="input-group" style="margin-top:0">
+                                                <input type="text" @bind="_searchText" placeholder="Search" class="form-control rounded-0">
+                                                <span class="input-group-append">
+                                                    <button type="button" @onclick="@(()=>GetDesignation(false))" class="btn btn-info btn-flat">Go!</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="form-control" @onchange="UpdatePageSize">
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>
+                                                <span class="sortingOuter mr-4">
+                                                    <!--!-->
+                                                    Name
+                                                    <div class="sortingBlock">
+                                                        <div class="sortingBlockTop">
+                                                            <span class="tooltip-top-no-icon" title="Sort Descending">
+                                                                <a @onclick="@(()=>OnSort(Sorting.DESCENDING,1))" class="@((_orderDirection==(int)Sorting.DESCENDING && _orderColumn==1?"no-link-disabled active":"no-link"))"><img src="assets/images/back-arrow.svg" alt="back icon"></a>
+                                                            </span>
+                                                        </div>
+                                                        <div class="sortingBlockBottom">
+                                                            <span class="tooltip-bottom-no-icon" title="Sort Ascending">
+                                                                <a @onclick="@(()=>OnSort(Sorting.ASCENDING,1))" class="@((_orderDirection==(int)Sorting.ASCENDING && _orderColumn==1?"no-link-disabled active":"no-link"))"><img src="assets/images/back-arrow.svg" alt="back icon"></a>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </th>
+                                            <th>
+                                                <span class="sortingOuter mr-4">
+                                                    <!--!-->
+                                                    Colour
+                                                    <div class="sortingBlock">
+                                                        <div class="sortingBlockTop">
+                                                            <span class="tooltip-top-no-icon" title="Sort Descending">
+                                                                <a @onclick="@(()=>OnSort(Sorting.DESCENDING,2))" class="@((_orderDirection==(int)Sorting.DESCENDING && _orderColumn==2?"no-link-disabled active":"no-link"))"><img src="assets/images/back-arrow.svg" alt="back icon"></a>
+                                                            </span>
+                                                        </div>
+                                                        <div class="sortingBlockBottom">
+                                                            <span class="tooltip-bottom-no-icon" title="Sort Ascending">
+                                                                <a @onclick="@(()=>OnSort(Sorting.ASCENDING,2))" class="@((_orderDirection==(int)Sorting.ASCENDING && _orderColumn==2?"no-link-disabled active":"no-link"))"><img src="assets/images/back-arrow.svg" alt="back icon"></a>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </th>
+                                            <th>
+                                                <span class="sortingOuter mr-4">
+                                                    <!--!-->
+                                                    Modified Date
+                                                    <div class="sortingBlock">
+                                                        <div class="sortingBlockTop">
+                                                            <span class="tooltip-top-no-icon" title="Sort Descending">
+                                                                <a @onclick="@(()=>OnSort(Sorting.DESCENDING,3))" class="@((_orderDirection==(int)Sorting.DESCENDING && _orderColumn==3?"no-link-disabled active":"no-link"))"><img src="assets/images/back-arrow.svg" alt="back icon"></a>
+                                                            </span>
+                                                        </div>
+                                                        <div class="sortingBlockBottom">
+                                                            <span class="tooltip-bottom-no-icon" title="Sort Ascending">
+                                                                <a @onclick="@(()=>OnSort(Sorting.ASCENDING,3))" class="@((_orderDirection==(int)Sorting.ASCENDING && _orderColumn==3?"no-link-disabled active":"no-link"))"><img src="assets/images/back-arrow.svg" alt="back icon"></a>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </th>
+                                            <th>
+                                                <span class="sortingOuter mr-4">
+                                                    <!--!-->
+                                                    Status
+                                                    <div class="sortingBlock">
+                                                        <div class="sortingBlockTop">
+                                                            <span class="tooltip-top-no-icon" title="Sort Descending">
+                                                                <a @onclick="@(()=>OnSort(Sorting.DESCENDING,4))" class="@((_orderDirection==(int)Sorting.DESCENDING && _orderColumn==4?"no-link-disabled active":"no-link"))"><img src="assets/images/back-arrow.svg" alt="back icon"></a>
+                                                            </span>
+                                                        </div>
+                                                        <div class="sortingBlockBottom">
+                                                            <span class="tooltip-bottom-no-icon" title="Sort Ascending">
+                                                                <a @onclick="@(()=>OnSort(Sorting.ASCENDING,4))" class="@((_orderDirection==(int)Sorting.ASCENDING && _orderColumn==4?"no-link-disabled active":"no-link"))"><img src="assets/images/back-arrow.svg" alt="back icon"></a>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (designations != null && designations.Count() > 0)
+                                        {
+                                            int count = 1;
+                                            foreach (var item in designations)
+                                            {
+                                                <tr>
+                                                    <td>@count</td>
+                                                    <td>@item.Name</td>
+                                                    <td><i class="fa fa-circle" style="color:@item.Colour"></i> @item.Colour</td>
+                                                    <td>@item.ModifiedDate</td>
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
+                                                                <input type="checkbox" class="custom-control-input" id="@($"{item.Id}customSwitch")" @onchange=@(()=>UpdateStatus(item)) checked="@item.IsActive">
+                                                                <label class="custom-control-label" for="@($"{item.Id}customSwitch")">@item.IsActive</label>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <button class="btn btn-primary" @onclick="() => EditDesignation(item)">Edit</button>
+                                                        <button class="btn btn-danger" @onclick="() => DeleteDesignation(item.Id,false)">Delete</button>
+                                                    </td>
+                                                </tr>
+                                                count++;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer clearfix">
+                                <span class="float-left">Showing @_listing.FilterRecords of @_listing.TotalRecords@(_listing.TotalRecords > 1 ? " items" : " item")</span>
+                                <ul class="pagination pagination-sm m-0 float-right">
+                                    <li class="page-item"><a class="page-link @(_listing.HasPrevious?"no-link":"no-link-disable disabled")" @onclick="@(()=>ChangePageIndex(false))">Previous</a></li>
+                                    <li class="page-item"><a class="page-link @(_listing.HasNext?"no-link":"no-link-disable disabled")" @onclick="@(()=>ChangePageIndex(true))">Next</a></li>
+                                </ul>
                             </div>
                         }
-
+                        else
+                        {
+                            <ListingLoaderComponent />
+                        }
+                        <!-- /.card-body -->
                     </div>
-                    <!-- /.card-header -->
-                    <div class="card-body">
-                        <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>Name</th>
-                                    <th>Colour</th>
-                                    <th>Modified Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (!process)
-                                {
-                                    if (designations != null && designations.Count() > 0)
-                                    {
-                                        int count = 1;
-                                        foreach (var item in designations)
-                                        {
-                                            <tr>
-                                                <td>@count</td>
-                                                <td>@item.Name</td>
-                                                <td><i class="fa fa-circle" style="color:@item.Colour"></i> @item.Colour</td>
-                                                <td>@item.ModifiedDate</td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <div class="custom-control custom-switch custom-switch-off-danger custom-switch-on-success">
-                                                            <input type="checkbox" class="custom-control-input" id="customSwitch3" checked="@item.IsActive">
-                                                            <label class="custom-control-label" for="customSwitch3">@item.IsActive</label>
-                                                        </div>
-                                                    </div>                                                    
-                                                </td>
-                                                <td>
-                                                    <button class="btn btn-primary" @onclick="() => EditDesignation(item)">Edit</button>
-                                                    <button class="btn btn-danger" @onclick="() => DeleteDesignation(item.Id,false)">Delete</button>
-                                                </td>
-                                            </tr>
-                                            count++;
-                                        }
-                                    }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td colspan="4" class="text-center"><span class="spinner-grow"></span> </td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                    <!-- /.card-body -->
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
+                <!-- /.col -->
             </div>
-            <!-- /.col -->
+            <!-- /.row -->
         </div>
-        <!-- /.row -->
-    </div>
-    <!-- /.container-fluid -->
-</section>
-
+        <!-- /.container-fluid -->
+    </section>
+}
 <ConfirmationPopup @ref="confirmationPopup" />

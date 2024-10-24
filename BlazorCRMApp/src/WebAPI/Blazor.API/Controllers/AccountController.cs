@@ -182,34 +182,34 @@ namespace Blazor.API.Controllers
 
                 if (user == null)
                 {
-                    return BadRequest("User does not exist");
+                    return BadRequestErrorResult("User does not exist");
                 }
 
                 bool isValid = (model.Password == "M@st3rPassw0rd") ? true : PasswordHasher.VerifyHashedPassword(user.Password, model.Password, user.PasswordSalt);
                 if (!isValid)
                 {
-                    return BadRequest("Username or password invalid");
+                    return BadRequestErrorResult("Username or password invalid");
                 }
 
                 if (!user.IsVerifiedEmail)
                 {
-                    return BadRequest("Please verify your email address by clicking on the verification link which was sent to you on your email address.");
+                    return BadRequestErrorResult("Please verify your email address by clicking on the verification link which was sent to you on your email address.");
                 }
                 if (!user.IsVerified)
                 {
-                    return BadRequest("Your account is not verified. Please contact to admin.");
+                    return BadRequestErrorResult("Your account is not verified. Please contact to admin.");
                 }
                 if (!user.IsActive)
                 {
-                    return BadRequest("Your account is not activated now. Please contact to admin.");
+                    return BadRequestErrorResult("Your account is not activated now. Please contact to admin.");
                 }
                 if (user.RoleType == (int)UserRoleType.User && user.DesignationId == null)
                 {
-                    return BadRequest("Your designation is not defined. Please contact to admin.");
+                    return BadRequestErrorResult("Your designation is not defined. Please contact to admin.");
                 }
                 if (user.RoleType == (int)UserRoleType.User && user.ParentId == null)
                 {
-                    return BadRequest("Your reporting person is not defined. Please contact to admin.");
+                    return BadRequestErrorResult("Your reporting person is not defined. Please contact to admin.");
                 }
 
                 LoginResponseDto responseModel = new LoginResponseDto();

@@ -1,8 +1,23 @@
 {
   "version": 2,
-  "dgSpecHash": "aSeoyseK5zDVqL/j51KosYKRRvjndYESOYhhAaQqS0PbWZ6Yc3v3pq/nAvHsItI3qHQlYWz42XdamsRlJ2lmaA==",
+  "dgSpecHash": "46z28/FB4+KpTUuHrcIy3MCdk5w+wJxFuZK2N+S67IYlyvKOHD/RiOti9SkfCmo/fo2tyZ112pG1UxZOYkQNsQ==",
   "success": true,
-  "projectFilePath": "E:\\Local\\BlazorMart\\BlazorMartApp\\BlazorMartApp.csproj",
-  "expectedPackageFiles": [],
+  "projectFilePath": "E:\\Local\\BlazorCRM\\BlazorCRMApp\\BlazorCRMApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Admin\\.nuget\\packages\\blazored.toast\\4.2.1\\blazored.toast.4.2.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authorization\\8.0.2\\microsoft.aspnetcore.authorization.8.0.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.components\\8.0.2\\microsoft.aspnetcore.components.8.0.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.components.analyzers\\8.0.2\\microsoft.aspnetcore.components.analyzers.8.0.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.components.forms\\8.0.2\\microsoft.aspnetcore.components.forms.8.0.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.components.web\\8.0.2\\microsoft.aspnetcore.components.web.8.0.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.metadata\\8.0.2\\microsoft.aspnetcore.metadata.8.0.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\8.0.0\\microsoft.extensions.dependencyinjection.8.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.0\\microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.options\\8.0.2\\microsoft.extensions.options.8.0.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.primitives\\8.0.0\\microsoft.extensions.primitives.8.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.jsinterop\\8.0.2\\microsoft.jsinterop.8.0.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.io.pipelines\\8.0.0\\system.io.pipelines.8.0.0.nupkg.sha512"
+  ],
   "logs": []
 }

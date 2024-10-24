@@ -981,6 +981,14 @@
       "PackagePath": "staticwebassets\\admin\\js\\pages\\dashboard3.js"
     },
     {
+      "Id": "E:\\Local\\BlazorCRM\\BlazorCRMApp\\src\\Web\\Blazor.Web\\wwwroot\\assets\\images\\back-arrow.svg",
+      "PackagePath": "staticwebassets\\assets\\images\\back-arrow.svg"
+    },
+    {
+      "Id": "E:\\Local\\BlazorCRM\\BlazorCRMApp\\src\\Web\\Blazor.Web\\wwwroot\\style.css",
+      "PackagePath": "staticwebassets\\style.css"
+    },
+    {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Blazor.Web.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

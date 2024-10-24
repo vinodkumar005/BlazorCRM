@@ -2,7 +2,9 @@
 using Blazor.API.Data.Entities;
 using Blazor.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shared.Lib.Dto;
+using Shared.Lib.Helper;
 using Shared.Lib.Resources;
 
 namespace Blazor.API.Controllers
@@ -20,17 +22,28 @@ namespace Blazor.API.Controllers
 
 
         #region [Designation Master]
-        [HttpGet]
-        public IActionResult GetDesignations()
+        [HttpPost]
+        public IActionResult GetDesignations([FromBody] ListingFilterDto model)
         {
             try
             {
                 List<DesignationResponseDto> responseModel = new List<DesignationResponseDto>();
 
-                var result = _masterService.GetDesignations();
+                var predicate = PredicateBuilder.True<DesignationMaster>();
+
+                predicate = predicate.And(m => m.IsDeleted == false);
+
+                if (!string.IsNullOrWhiteSpace(model.Search))
+                {
+                    model.Search = model.Search.ToLower()?.Trim();
+                    predicate = predicate.And(m => m.Name.ToLower().StartsWith(model.Search!));
+                }
+
+                var result = _masterService.GetDesignations(predicate, model.OrderColumn, model.OrderDirection);
+
                 responseModel = _mapper.Map<List<DesignationResponseDto>>(result);
 
-                return SuccessResult(responseModel);
+                return SuccessResult(responseModel.ToPageList(model.PageIndex, model.PageSize));
             }
             catch (Exception exception)
             {
@@ -61,10 +74,14 @@ namespace Blazor.API.Controllers
         {
             try
             {
-                var category = _mapper.Map<DesignationMaster>(model);
-                _masterService.AddUpdate(category);
+                if (!_masterService.DesignationNameAvailabiltity(model.Id, model.Name))
+                {
+                    var category = _mapper.Map<DesignationMaster>(model);
+                    _masterService.AddUpdate(category);
 
-                return SuccessResult(true);
+                    return SuccessResult(true);
+                }
+                return BadRequestErrorResult("Designation name already exist");
             }
             catch (Exception exception)
             {
@@ -78,6 +95,20 @@ namespace Blazor.API.Controllers
             try
             {
                 _masterService.DeleteDesignationById(id);
+                return SuccessResult(true);
+            }
+            catch (Exception exception)
+            {
+                return ExceptionErrorResult(BaseResponseMessages.EXCEPTION, exception);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult UpdateDesignationStatus(int id, bool status)
+        {
+            try
+            {
+                _masterService.UpdateDesignationStatus(id, status);
                 return SuccessResult(true);
             }
             catch (Exception exception)

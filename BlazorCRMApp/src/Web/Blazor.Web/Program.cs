@@ -1,7 +1,7 @@
 using Blazor.Web.Components;
 using Blazor.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.FluentUI.AspNetCore.Components;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,10 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-builder.Services.AddFluentUIComponents(options =>
-{
-    options.ValidateClassNames = false;
-});
+builder.Services.AddRadzenComponents();
+builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<CustomNotificationService>();
 
 builder.Services.AddRazorPages();
 

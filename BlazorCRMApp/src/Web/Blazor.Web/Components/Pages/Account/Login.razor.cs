@@ -1,6 +1,5 @@
 ﻿using Blazor.Web.Services;
 using Microsoft.AspNetCore.Components;
-using Microsoft.FluentUI.AspNetCore.Components;
 using Shared.Lib.Dto;
 using Shared.Lib.Helper;
 
@@ -13,7 +12,8 @@ namespace Blazor.Web.Components.Pages.Account
 
         [Inject] NavigationManager NavigationManager { get; set; } = default!;
 
-        [Inject] IDialogService DialogService { get; set; } = default!;
+        
+        //[Inject] IToastService DialogService { get; set; } = default!;
         #endregion
 
         #region [Variables]       
@@ -39,13 +39,13 @@ namespace Blazor.Web.Components.Pages.Account
                 }
                 else
                 {
-                    await DialogService.ShowInfoAsync(loginResponse.Message);
+                    
                     loading = false;
                 }
             }
             catch (Exception ex)
             {
-                await DialogService.ShowErrorAsync(ex.Message);
+              
                 loading = false;
             }
         }

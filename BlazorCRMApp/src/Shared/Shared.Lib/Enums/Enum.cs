@@ -540,4 +540,9 @@ namespace Shared.Lib.Enums
         Deleted,
         Unchanged
     }
+
+    public enum Sorting
+    {
+        ASCENDING = 1, DESCENDING = 2,
+    }
 }

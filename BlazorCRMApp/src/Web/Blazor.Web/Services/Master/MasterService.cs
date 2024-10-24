@@ -5,10 +5,11 @@ namespace Blazor.Web.Services
     public interface IMasterService
     {
         #region [Designation]
-        Task<BaseApiResponseDto<List<DesignationResponseDto>>> GetDesignations();
+        Task<BaseApiResponseDto<PageResponseViewModel<DesignationResponseDto>>> GetDesignations(ListingFilterDto model);
         Task<BaseApiResponseDto<DesignationResponseDto>> GetDesignationById(int id);
         Task<BaseApiResponseDto<bool>> ManageDesignation(DesignationRequestDto model);
         Task<BaseApiResponseDto<bool>> DeleteDesignation(int id);
+        Task<BaseApiResponseDto<bool>> UpdateDesignationStatus(int id, bool status);
         #endregion
 
         #region[Country State City]
@@ -28,9 +29,9 @@ namespace Blazor.Web.Services
         }
 
         #region [Designation]
-        public async Task<BaseApiResponseDto<List<DesignationResponseDto>>> GetDesignations()
+        public async Task<BaseApiResponseDto<PageResponseViewModel<DesignationResponseDto>>> GetDesignations(ListingFilterDto model)
         {
-            return await httpService.GetAsync<List<DesignationResponseDto>>($"Master/GetDesignations");
+            return await httpService.PostAsync<PageResponseViewModel<DesignationResponseDto>>($"Master/GetDesignations", model);
         }
         public async Task<BaseApiResponseDto<DesignationResponseDto>> GetDesignationById(int id)
         {
@@ -44,6 +45,11 @@ namespace Blazor.Web.Services
         public async Task<BaseApiResponseDto<bool>> DeleteDesignation(int id)
         {
             return await httpService.DeleteAsync<bool>($"Master/DeleteDesignation", id);
+        }
+
+        public async Task<BaseApiResponseDto<bool>> UpdateDesignationStatus(int id, bool status)
+        {
+            return await httpService.GetAsync<bool>($"Master/UpdateDesignationStatus?id={id}&status={status}");
         }
         #endregion
 
