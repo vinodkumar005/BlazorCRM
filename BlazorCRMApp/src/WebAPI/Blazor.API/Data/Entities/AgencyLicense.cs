@@ -25,5 +25,5 @@ public partial class AgencyLicense
 
     public virtual Agency Agency { get; set; }
 
-    public virtual State State { get; set; }
+    public virtual StateMaster State { get; set; }
 }

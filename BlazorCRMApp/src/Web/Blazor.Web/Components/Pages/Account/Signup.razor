@@ -1,0 +1,324 @@
+﻿@page "/signup"
+@layout EmptyLayout
+
+
+<div class="register-box">
+    <div class="register-logo">
+        <a href="../../index2.html"><b>Register a new membership</b></a>
+    </div>
+    <div class="card">
+        <div class="card-body register-card-body">
+            <EditForm Model="model" OnValidSubmit="SignUp">
+                <DataAnnotationsValidator />
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>First Name <span class="astick-required">*</span></label>
+                            <InputText @bind-Value="model.FirstName" class="form-control" maxlength="250" />
+                            <ValidationMessage For="@(()=>model.FirstName)" class="blazor-error-boundary" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Last Name</label>
+                            <InputText @bind-Value="model.LastName" class="form-control" maxlength="250" />
+                            <ValidationMessage For="@(()=>model.LastName)" class="blazor-error-boundary" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Date Of Birth</label>
+                            <InputDate @bind-Value="model.Dob" class="form-control" max="@DateTime.Now" />
+                            <ValidationMessage For="@(()=>model.Dob)" class="blazor-error-boundary" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Email Address <span class="astick-required">*</span></label>
+                            @if (model.Id > 0)
+                            {
+                                <InputText @bind-Value="model.Email" placeholder="example@email.com" class="form-control" readonly="readonly" maxlength="200" />
+                            }
+                            else
+                            {
+                                <InputText @bind-Value="model.Email" placeholder="example@email.com" class="form-control" maxlength="200" />
+                            }
+                            <ValidationMessage For="@(()=>model.Email)" class="blazor-error-boundary" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Mobile No <span class="astick-required">*</span></label>
+                            <InputText @bind-Value="model.Mobile" placeholder="000 123 4567" class="form-control" maxlength="12" />
+                            <ValidationMessage For="@(()=>model.Mobile)" class="blazor-error-boundary" />
+                        </div>
+                    </div>
+                    @if (model.Id == 0)
+                    {
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Password <span class="astick-required">*</span></label>
+                                <InputText @bind-Value="model.Password" placeholder="Password" class="form-control" maxlength="50" />
+                                <ValidationMessage For="@(()=>model.Password)" class="blazor-error-boundary" />
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label>Address <span class="astick-required">*</span></label>
+                            <InputText @bind-Value="model.Address" placeholder="Address" class="form-control" maxlength="200" />
+                            <ValidationMessage For="@(()=>model.Address)" class="blazor-error-boundary" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>ZipCode <span class="astick-required">*</span></label>
+                            <InputText @bind-Value="model.ZipCode" placeholder="ZipCode" class="form-control" maxlength="20" />
+                            <ValidationMessage For="@(()=>model.ZipCode)" class="blazor-error-boundary" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Country <span class="astick-required">*</span></label>
+                            @if (countries.Count > 0)
+                            {
+                                <select class="form-control" @onchange="@((e)=>GetState(e))">
+                                    @foreach (var item in countries)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                                <ValidationMessage For="@(()=>model.CountryId)" class="blazor-error-boundary" />
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>State <span class="astick-required">*</span></label>
+                            @if (states.Count > 0)
+                            {
+                                <select class="form-control" @onchange="@((e)=>GetCities(e))">
+                                    @foreach (var item in states)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                                <ValidationMessage For="@(()=>model.StateId)" class="blazor-error-boundary" />
+                            }
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>City <span class="astick-required">*</span></label>
+                            @if (cities.Count > 0)
+                            {
+                                <InputSelect @bind-Value="model.CityId" class="form-control">
+                                    @foreach (var item in cities)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </InputSelect>
+                                <ValidationMessage For="@(()=>model.CityId)" class="blazor-error-boundary" />
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label asp-for="TimeZoneId"></label>
+                            @if (timeZones != null && timeZones.Count > 0)
+                            {
+                                <InputSelect @bind-Value="model.TimeZoneId" class="form-control">
+                                    @foreach (var item in timeZones)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </InputSelect>
+                                <ValidationMessage For="@(()=>model.TimeZoneId)" class="blazor-error-boundary" />
+                            }
+                        </div>
+                    </div>
+                    @if (!model.FormType)
+                    {
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Designation <span class="astick-required">*</span></label>
+                                <div class="sltd-outer">
+                                    <input type="hidden" asp-for="DesignationId" />
+                                    <button type="button" class="sltd-trigger-dropdown">
+                                        @if (model.DesignationId != null)
+                                        {
+                                            var des = designations.Where(x => Convert.ToInt64(x.Value) == model.DesignationId).FirstOrDefault();
+                                            if (des != null)
+                                            {
+                                                <span class="sltd-color-circle" style="background-color:@des.Colour"></span>
+                                                @des.Text
+                                            }
+                                            else
+                                            {
+                                                <span class="sltd-color-circle"></span>
+                                                <span>Select</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="sltd-color-circle"></span>
+                                            <span>Select</span>
+                                        }
+                                        <i><img src="../../images/dropdown-arrow.png" alt="dropdown-arrow"></i>
+                                    </button>
+                                    <div class="dropdown-menu color-dropdown" data-selected="Select">
+                                        <button type="button" data-text="Select" class="dropdown-item color-dropdown-item-add">
+                                            <span class="sltd-color-circle"></span>
+                                            Select
+                                        </button>
+                                        @if (designations != null && designations.Count > 0)
+                                        {
+                                            @foreach (var item in designations)
+                                            {
+                                                var selectedClass = "";
+                                                if (item.Value == Convert.ToString(model.DesignationId))
+                                                    selectedClass = "ddlbg";
+
+                                                <button type="button" value="@item.Value" data-text="@item.Text" data-color="@item.Colour" class="dropdown-item color-dropdown-item-add @selectedClass">
+                                                    <span class="sltd-color-circle" style="background-color:@item.Colour"></span>
+                                                    @item.Text
+                                                </button>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <ValidationMessage For="@(()=>model.DesignationId)" class="blazor-error-boundary" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Reporting To <span class="astick-required">*</span></label>
+                                <div class="sltd-outer">
+                                    <input type="hidden" asp-for="ParentId" />
+                                    <button type="button" class="sltd-trigger-dropdown parent">
+                                        @if (model.ParentId != null)
+                                        {
+                                            var parent = parentList.Where(x => x.Value == Convert.ToString(model.ParentId)).FirstOrDefault();
+                                            if (parent != null)
+                                            {
+                                                <span class="sltd-color-circle" style="background-color:@parent.Colour"></span>
+                                                @parent.Text
+                                            }
+                                            else
+                                            {
+                                                <span class="sltd-color-circle"></span>
+                                                <span>Select</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="sltd-color-circle"></span>
+                                            <span>Select</span>
+                                        }
+                                        <i><img src="../../images/dropdown-arrow.png" alt="dropdown-arrow"></i>
+                                    </button>
+
+                                    <div class="dropdown-menu color-dropdown" data-selected="Select">
+                                        <button type="button" data-text="Select" class="dropdown-item color-dropdown-item-add">
+                                            <span class="sltd-color-circle"></span>
+                                            Select
+                                        </button>
+                                        @if (parentList != null && parentList.Count > 0)
+                                        {
+                                            @foreach (var item in parentList)
+                                            {
+                                                var selectedClass = "";
+                                                if (item.Value == Convert.ToString(model.ParentId))
+                                                    selectedClass = "ddlbg";
+
+                                                <button type="button" value="@item.Value" data-text="@item.Text" data-color="@item.Colour" class="dropdown-item color-dropdown-item-add @selectedClass">
+                                                    <span class="sltd-color-circle" style="background-color:@item.Colour"></span>
+                                                    @item.Text
+                                                </button>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <ValidationMessage For="@(()=>model.ParentId)" class="blazor-error-boundary" />
+                            </div>
+                        </div>
+                    }
+                </div>
+                @if (!model.FormType)
+                {
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="col-1">
+                                        <label asp-for="IsActive"></label>
+                                    </div>
+                                    <div class="col-2">
+                                        <InputCheckbox @bind-Value="model.IsActive" />
+                                    </div>
+                                </div>
+                                @if (!model.IsVerified || model.Id == 0)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="col-1">
+                                            <label asp-for="IsVerified"></label>
+                                        </div>
+                                        <InputCheckbox @bind-Value="model.IsVerified" />
+                                    </div>
+                                }
+                                else
+                                {
+                                    <input type="hidden" asp-for="IsVerified" />
+                                }
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Color <span class="astick-required">*</span></label>
+                                        <InputText @bind-Value="model.Colour" type="color" class="form-control" placeholder="Colour" autocomplete="off" maxlength="250" />
+                                        <ValidationMessage For="@(()=>model.Colour)" class="blazor-error-boundary" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                }
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button id="btnSubmit" class="btn btn-primary btn-block btn-flat" type="submit">Submit</button>
+                        @if (model.FormType)
+                        {
+                            <a class="blue-btn btn-custom ml-2" href="/account">Back to Login</a>
+                        }
+                        else
+                        {
+                            <a class="blue-btn btn-custom ml-2" href="/admin/user">Back</a>
+                        }
+                    </div>
+                </div>
+            </EditForm>
+            <a href="login.html" class="text-center">I already have a membership</a>
+        </div>
+        <!-- /.form-box -->
+    </div><!-- /.card -->
+</div>
+
+
+
+
+
+
+
+
+
+

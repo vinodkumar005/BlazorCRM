@@ -1,0 +1,88 @@
+﻿.sortingOuter {
+    position: relative;
+}
+
+    .sortingOuter .hoverShowInfo {
+        display: inline-block;
+        position: absolute;
+        top: -12px;
+        right: -85px;
+        background: #fff;
+        font-size: 10px;
+        border-radius: 15px;
+        border: solid 1px #d9d9d9;
+        padding: 0px 2px 0px;
+        display: none;
+    }
+
+    .sortingOuter .sortingBlock {
+        position: absolute;
+        top: -5px;
+        right: -25px;
+    }
+
+        .sortingOuter .sortingBlock img {
+            width: 15px;
+            display: block;
+            opacity: 0.6;
+        }
+
+        .sortingOuter .sortingBlock .active img {
+            opacity: 1;
+        }
+
+        .sortingOuter .sortingBlock .sortingBlockTop {
+            position: relative;
+        }
+
+            .sortingOuter .sortingBlock .sortingBlockTop img {
+                transform: rotate(90deg);
+            }
+
+            .sortingOuter .sortingBlock .sortingBlockTop:hover .hoverShowInfo {
+                display: block;
+            }
+
+        .sortingOuter .sortingBlock .sortingBlockBottom {
+            position: relative;
+        }
+
+            .sortingOuter .sortingBlock .sortingBlockBottom img {
+                transform: rotate(-90deg);
+            }
+
+            .sortingOuter .sortingBlock .sortingBlockBottom:hover .hoverShowInfo {
+                display: block;
+            }
+
+
+.table thead tr th {
+    text-transform: uppercase !important;
+}
+
+.invalid {
+    border-color: red !important;
+}
+
+.error-text {
+    color: red;
+}
+
+
+
+.radzen-notification-container {
+    position: fixed;
+    top: 20px; /* Adjust the top distance */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999; /* Ensure it stays on top */
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Optional: To style the individual notification itself */
+.radzen-notification {
+    min-width: 300px; /* Adjust notification width if needed */
+}

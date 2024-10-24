@@ -1,16 +1,18 @@
-﻿<h3>GrandComponent</h3>
+﻿
+<h3>This is a grand child component</h3>
+<button @onclick="ChangeTheme">Change Theme</button>
 
-<h1>Theme : @theme</h1>
-@if (currentUser != null)
-{
-    <h1>Name @currentUser.Name</h1>
-    <h1>Role @currentUser.Role</h1>
-}
---------------------------------
+<h1>Theme : @homeComponent.theme</h1>
+
+
+
 @code {
     [CascadingParameter]
-    public User currentUser { get; set; }
+    public Home homeComponent { get; set; } = default!;
 
-    [CascadingParameter]
-    private string theme { get; set; }
+
+    public void ChangeTheme()
+    {
+        homeComponent.UpdateTheme("Light");
+    }
 }

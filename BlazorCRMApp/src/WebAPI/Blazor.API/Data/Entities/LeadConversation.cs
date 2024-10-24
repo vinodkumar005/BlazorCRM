@@ -16,6 +16,4 @@ public partial class LeadConversation
     public Guid AddedBy { get; set; }
 
     public virtual UserLogin AddedByNavigation { get; set; }
-
-    public virtual Lead Lead { get; set; }
 }

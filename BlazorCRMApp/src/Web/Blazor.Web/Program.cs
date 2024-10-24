@@ -1,6 +1,7 @@
 using Blazor.Web.Components;
 using Blazor.Web.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddRadzenComponents();
+builder.Services.AddScoped<NotificationService>();
+builder.Services.AddScoped<CustomNotificationService>();
 
 builder.Services.AddRazorPages();
 
@@ -32,7 +37,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         option.Cookie.Name = "auth_token";
         option.LoginPath = "/login";
-        option.Cookie.MaxAge = TimeSpan.FromMinutes(5);
+        option.Cookie.MaxAge = TimeSpan.FromMinutes(30);
         option.AccessDeniedPath = "/access-denied";
     });
 

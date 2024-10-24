@@ -1,20 +1,73 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Components.Routing
+@inject NavigationManager NavigationManager
+
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    <link rel="stylesheet" href="bootstrap/bootstrap.min.css" />
+
+
     <link rel="stylesheet" href="app.css" />
-    <link rel="stylesheet" href="Blazor.Web.styles.css" />
+    @* <link rel="stylesheet" href="Blazor.Web.styles.css" /> *@
     <link rel="icon" type="image/png" href="favicon.png" />
     <HeadOutlet @rendermode="InteractiveServer" />
+
+    
+    <link href="/style.css" rel="stylesheet" />
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link href="/admin/fontawesome-free/css/all.min.css" rel="stylesheet" />
+    <!-- icheck bootstrap -->
+    <link href="/admin/icheck-bootstrap/icheck-bootstrap.min.css" rel="stylesheet" />
+    <!-- Theme style -->
+    <link href="/admin/css/adminlte.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="_content/Radzen.Blazor/css/material-base.css">
+
 </head>
 
-<body>
+<body class="@CurrentPageClass">
     <Routes @rendermode="InteractiveServer" />
+    <script src="/admin/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="/admin/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="/admin/js/adminlte.min.js"></script>
+    <script src="_content/Radzen.Blazor/Radzen.Blazor.js" asp-append-version="true"></script>
     <script src="_framework/blazor.web.js"></script>
 </body>
 
 </html>
+
+
+
+@code {
+    private string CurrentPageClass = "";
+
+    protected override void OnInitialized()
+    {
+        UpdateCurrentPageClass(NavigationManager.Uri);
+    }
+
+    private void UpdateCurrentPageClass(string uri)
+    {
+        if (uri.Contains("signup"))
+        {
+            CurrentPageClass = "hold-transition register-page";
+        }
+        else if (uri.Contains("login"))
+        {
+            CurrentPageClass = "hold-transition login-page";
+        }
+        else
+        {
+            CurrentPageClass = "hold-transition sidebar-mini";
+        }
+
+        // Trigger a re-render
+       // StateHasChanged();
+    }
+}

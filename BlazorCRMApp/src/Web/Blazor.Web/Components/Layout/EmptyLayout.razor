@@ -1,9 +1,12 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
+<div class="main">
     <main>
-        <article class="content px-4">
-            @Body
-        </article>
+        @Body
+        <FluentToastProvider />
+        <FluentDialogProvider />
+        <FluentTooltipProvider />
+        <FluentMessageBarProvider />
+        <FluentMenuProvider />
     </main>
 </div>

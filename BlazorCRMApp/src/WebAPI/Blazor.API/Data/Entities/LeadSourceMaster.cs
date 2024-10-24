@@ -18,4 +18,6 @@ public partial class LeadSourceMaster
     public DateTime CreatedDate { get; set; }
 
     public DateTime ModifiedDate { get; set; }
+
+    public virtual ICollection<Leads> Leads { get; } = new List<Leads>();
 }

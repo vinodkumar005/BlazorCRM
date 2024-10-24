@@ -38,6 +38,7 @@ namespace Blazor.API.Services
             {
                 Guid userId = Guid.NewGuid();
                 user.Id = userId;
+                user.ForgetPasswordLink = "www.google.com";
                 user.CreateDate = DateTime.UtcNow;
                 user.ModifyDate = DateTime.UtcNow;
                 _DBContext.UserLogin.Add(user);
@@ -80,7 +81,7 @@ namespace Blazor.API.Services
         public UserLoginDto GetUserLogin(string userName)
         {
             var userLogin = new UserLoginDto();
-            var loginuser = _DBContext.UserLogin.Include(m => m.Users).FirstOrDefault(x => x.IsDeleted == false && x.Username.Equals(userName));
+            var loginuser = _DBContext.UserLogin.Include(m => m.UsersUserLogin).FirstOrDefault(x => !x.IsDeleted && x.Username.Equals(userName));
 
             if (loginuser != null)
             {
@@ -88,6 +89,7 @@ namespace Blazor.API.Services
                 userLogin.Username = loginuser.Username;
                 userLogin.IsActive = loginuser.IsActive;
                 userLogin.IsVerified = loginuser.IsVerified;
+                userLogin.IsVerifiedEmail = loginuser.IsVerifiedEmail;
                 userLogin.Password = loginuser.Password;
                 userLogin.PasswordSalt = loginuser.PasswordSalt;
                 userLogin.RoleType = loginuser.RoleType;
@@ -98,7 +100,7 @@ namespace Blazor.API.Services
                 }
                 else if (loginuser.RoleType == (int)UserRoleType.User)
                 {
-                    var user = loginuser.Users.FirstOrDefault();
+                    var user = loginuser.UsersUserLogin.FirstOrDefault();
                     userLogin.Name = $"{user.FirstName} {user.LastName}".Replace("  ", " ");
                     userLogin.ProfileImage = !string.IsNullOrEmpty(user.ProfilePic) ? $"/DYF/UserProfilePic/{user.ProfilePic}" : "/admin/images/default-user-img.jpg";
                     userLogin.UserId = user.Id;

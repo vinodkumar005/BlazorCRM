@@ -404,6 +404,7 @@ E:\Local\BlazorCRM\BlazorCRMApp\src\WebAPI\Blazor.API\obj\Debug\net8.0\Blazor.AP
 E:\Local\BlazorCRM\BlazorCRMApp\src\WebAPI\Blazor.API\obj\Debug\net8.0\Blazor.API.csproj.CoreCompileInputs.cache
 E:\Local\BlazorCRM\BlazorCRMApp\src\WebAPI\Blazor.API\obj\Debug\net8.0\Blazor.API.MvcApplicationPartsAssemblyInfo.cs
 E:\Local\BlazorCRM\BlazorCRMApp\src\WebAPI\Blazor.API\obj\Debug\net8.0\Blazor.API.MvcApplicationPartsAssemblyInfo.cache
+E:\Local\BlazorCRM\BlazorCRMApp\src\WebAPI\Blazor.API\obj\Debug\net8.0\Blazor.API.sourcelink.json
 E:\Local\BlazorCRM\BlazorCRMApp\src\WebAPI\Blazor.API\obj\Debug\net8.0\staticwebassets.build.json
 E:\Local\BlazorCRM\BlazorCRMApp\src\WebAPI\Blazor.API\obj\Debug\net8.0\staticwebassets.development.json
 E:\Local\BlazorCRM\BlazorCRMApp\src\WebAPI\Blazor.API\obj\Debug\net8.0\staticwebassets\msbuild.Blazor.API.Microsoft.AspNetCore.StaticWebAssets.props

@@ -1,26 +1,21 @@
-﻿@inherits LayoutComponentBase
+﻿@using Radzen.Blazor
+@inherits LayoutComponentBase
 
 
 <AuthorizeView>
     <Authorized>
-        <div class="page">
-            <div class="sidebar">
+        <main>
+            <div class="wrapper">
+                @* <Header /> *@
                 <NavMenu />
-            </div>
-            <main>
-                <article class="content px-4">
+                <div class="content-wrapper">
                     @Body
-                </article>
-            </main>
-        </div>
+                </div>
+            </div>
+             <RadzenComponents />
+        </main>
     </Authorized>
     <NotAuthorized>
         <AccessDenied />
     </NotAuthorized>
 </AuthorizeView>
-
-<div id="blazor-error-ui">
-    An unhandled error has occurred.
-    <a href="" class="reload">Reload</a>
-    <a class="dismiss">🗙</a>
-</div>
